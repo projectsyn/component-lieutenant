@@ -1,0 +1,3 @@
+parameters:
+  lieutenant:
+    namespace: syn-lieutenant
