@@ -5,14 +5,10 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.lieutenant;
 
-local namespace = 'lieutenant';
 {
-  namespace: kube.Namespace(namespace) {
+  '01_namespace': kube.Namespace(params.namespace) {
     metadata: {
-      name: namespace,
-      labels: {
-        name: namespace,
-      },
+      name: params.namespace,
     },
   },
 }

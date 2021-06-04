@@ -32,7 +32,7 @@ func Test_CRDs(t *testing.T) {
 
 func Test_Namespace(t *testing.T) {
 	ns := corev1.Namespace{}
-	data, err := ioutil.ReadFile(testPath + "/namespace.yaml")
+	data, err := ioutil.ReadFile(testPath + "/01_namespace.yaml")
 	require.NoError(t, err)
 	err = yaml.Unmarshal(data, &ns)
 	require.NoError(t, err)

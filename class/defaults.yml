@@ -4,3 +4,10 @@ parameters:
     operator:
       git_tag: v0.5.3
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:git_tag}/deploy
+      default_deletion_policy: Archive
+      deletion_protection: true
+      default_global_git_repo: https://github.com/projectsyn/getting-started-commodore-defaults
+      vault:
+        enabled: true
+        addr: vault.todo
+        path: kv
