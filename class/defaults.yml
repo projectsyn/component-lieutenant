@@ -1,3 +1,6 @@
 parameters:
   lieutenant:
-    namespace: syn-lieutenant
+    namespace: lieutenant
+    operator:
+      git_tag: v0.5.3
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:git_tag}/deploy
