@@ -44,3 +44,7 @@ parameters:
           - lieutenant/component/operator.jsonnet
         input_type: jsonnet
         output_path: lieutenant/10_operator/
+      - input_paths:
+          - lieutenant/component/githosts.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/30_githosts/
