@@ -19,6 +19,9 @@ parameters:
       ingress:
         host: lieutenant.todo
         annotations: {}
+      users:
+        - kind: ServiceAccount
+          name: api-access-vshn-portal-prod
     githosts:
       - name: gitlab-vshn
         endpoint: https://git.vshn.net/
