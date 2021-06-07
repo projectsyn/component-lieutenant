@@ -11,6 +11,14 @@ parameters:
         enabled: true
         addr: vault.todo
         path: kv
+    api:
+      git_tag: v0.6.0
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:git_tag}/deploy
+      default_githost: gitlab-vshn
+      steward_image: docker.io/projectsyn/steward:v0.3.1
+      ingress:
+        host: lieutenant.todo
+        annotations: {}
     githosts:
       - name: gitlab-vshn
         endpoint: https://git.vshn.net/

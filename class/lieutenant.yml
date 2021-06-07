@@ -27,6 +27,22 @@ parameters:
       - type: https
         source: ${lieutenant:operator:manifest_url}/service_account.yaml
         output_path: manifests/operator/service_account.yaml
+      # API
+      - type: https
+        source: ${lieutenant:api:manifest_url}/deployment.yaml
+        output_path: manifests/api/deployment.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/service.yaml
+        output_path: manifests/api/service.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/role.yaml
+        output_path: manifests/api/role.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/role_binding.yaml
+        output_path: manifests/api/role_binding.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/service_account.yaml
+        output_path: manifests/api/service_account.yaml
     compile:
       - input_paths:
           - lieutenant/component/app.jsonnet
@@ -44,6 +60,10 @@ parameters:
           - lieutenant/component/operator.jsonnet
         input_type: jsonnet
         output_path: lieutenant/10_operator/
+      - input_paths:
+          - lieutenant/component/api.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/20_api/
       - input_paths:
           - lieutenant/component/githosts.jsonnet
         input_type: jsonnet
