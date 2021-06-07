@@ -68,3 +68,7 @@ parameters:
           - lieutenant/component/githosts.jsonnet
         input_type: jsonnet
         output_path: lieutenant/30_githosts/
+      - input_paths:
+          - lieutenant/component/rbac.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/40_rbac/
