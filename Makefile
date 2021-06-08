@@ -64,7 +64,7 @@ docs-vale:
 .PHONY: compile
 compile: format lint
 	@echo Compiling..
-	@$(COMMODORE_CMD) component compile .
+	@$(COMMODORE_CMD) component compile . -f tests/test.yml
 
 .PHONY: test
 test: compile

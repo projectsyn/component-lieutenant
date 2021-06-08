@@ -89,12 +89,23 @@ local objects = [
   role_binding,
   user_role,
   user_role_binding,
-  service,
+  service {
+    spec+: {
+      selector+: params.api.common_labels,
+    },
+  },
   deployment {
     spec+: {
+      selector+: {
+        matchLabels+: params.api.common_labels,
+      },
       template+: {
+        metadata+: {
+          labels+: params.api.common_labels,
+        },
         spec+: {
           containers: [ deployment.spec.template.spec.containers[0] {
+            image: params.api.image,
             env+: [
               {
                 name: 'DEFAULT_API_SECRET_REF_NAME',
@@ -118,6 +129,7 @@ local objects = [
   ['%s-%s' % [ std.asciiLower(obj.kind), std.asciiLower(obj.metadata.name) ]]: obj {
     metadata+: {
       namespace: params.namespace,
+      labels+: params.api.common_labels,
     },
   }
   for obj in objects

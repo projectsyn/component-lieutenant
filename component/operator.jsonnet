@@ -16,9 +16,16 @@ local objects = [
   role_binding,
   deployment {
     spec+: {
+      selector+: {
+        matchLabels+: params.operator.common_labels,
+      },
       template+: {
+        metadata+: {
+          labels+: params.operator.common_labels,
+        },
         spec+: {
           containers: [ deployment.spec.template.spec.containers[0] {
+            image: params.operator.image,
             env+: [
               {
                 name: 'DEFAULT_DELETION_POLICY',
@@ -30,11 +37,11 @@ local objects = [
               },
               {
                 name: 'LIEUTENANT_DELETE_PROTECTION',
-                value: params.operator.deletion_protection,
+                value: std.toString(params.operator.deletion_protection),
               },
               {
                 name: 'SKIP_VAULT_SETUP',
-                value: !params.operator.vault.enabled,
+                value: std.toString(!params.operator.vault.enabled),
               },
             ] + (
               if params.operator.vault.enabled then [
@@ -60,6 +67,7 @@ local objects = [
   ['%s' % [ std.asciiLower(obj.kind) ]]: obj {
     metadata+: {
       namespace: params.namespace,
+      labels+: params.operator.common_labels,
     },
   }
   for obj in objects
