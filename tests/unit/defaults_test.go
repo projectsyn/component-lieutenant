@@ -15,6 +15,9 @@ import (
 
 var (
 	testPath = "../../compiled/lieutenant/lieutenant"
+
+	namespace = "lieutenant"
+	operator  = "lieutenant-operator"
 )
 
 // kubeval is unable to validate some of the resources
@@ -49,9 +52,9 @@ func validate(t *testing.T, path string) {
 			res, err := kubeval.Validate(data, conf)
 			require.NoError(t, err)
 			for _, r := range res {
-        if len(r.Errors) > 0 {
+				if len(r.Errors) > 0 {
 					t.Errorf("%s", filePath)
-        }
+				}
 				for _, e := range r.Errors {
 					t.Errorf("\t %s", e)
 				}
