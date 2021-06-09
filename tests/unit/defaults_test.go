@@ -17,7 +17,14 @@ var (
 	testPath = "../../compiled/lieutenant/lieutenant"
 
 	namespace = "lieutenant"
-	operator  = "lieutenant-operator"
+
+	operator      = "lieutenant-operator"
+	operatorImage = "docker.io/projectsyn/lieutenant-operator:v0.5.3"
+
+	api            = "lieutenant-api"
+	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.6.0"
+	stewardImage   = "docker.io/projectsyn/steward:v0.3.1"
+	defaultGithost = "gitlab-com"
 )
 
 // kubeval is unable to validate some of the resources

@@ -10,6 +10,7 @@ local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/api/role_
 local deployment = std.parseJson(kap.yaml_load('lieutenant/manifests/api/deployment.yaml'));
 local service = std.parseJson(kap.yaml_load('lieutenant/manifests/api/service.yaml'));
 
+
 local ingress = kube.Ingress('lieutenant-api') {
   metadata: std.prune({
     name: 'lieutenant-api',
@@ -106,15 +107,21 @@ local objects = [
         spec+: {
           containers: [ deployment.spec.template.spec.containers[0] {
             image: params.api.image,
-            env+: [
-              {
-                name: 'DEFAULT_API_SECRET_REF_NAME',
-                value: params.api.default_githost,
-              },
-              {
-                name: 'STEWARD_IMAGE',
-                value: params.api.steward_image,
-              },
+            env: [
+              if e.name == 'STEWARD_IMAGE'
+              then
+                {
+                  name: 'STEWARD_IMAGE',
+                  value: params.api.steward_image,
+                }
+              else e
+
+              for e in super.env + [
+                {
+                  name: 'DEFAULT_API_SECRET_REF_NAME',
+                  value: params.api.default_githost,
+                },
+              ]
             ],
           } ],
         },
