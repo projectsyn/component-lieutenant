@@ -6,3 +6,4 @@ manifests/
 vendor/
 compiled/
 jsonnetfile.lock.json
+jsonnetfile.json
