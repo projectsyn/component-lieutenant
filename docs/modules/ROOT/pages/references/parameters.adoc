@@ -33,7 +33,7 @@ The lieutenant-operator container image to deploy.
 
 [horizontal]
 type:: dict
-default: :: 
+default: ::
 [source,yaml]
 ----
 app.kubernetes.io/name: 'lieutenant-operator'
@@ -51,7 +51,7 @@ type:: string
 default:: `Archive`
 
 Sets what deletion policy for external resources (Git, Vault) should be used by default.
-One of `Archive`, `Delete`, `Retain`. 
+One of `Archive`, `Delete`, `Retain`.
 
 
 == `operator.deletion_protection`
@@ -121,7 +121,7 @@ The lieutenant-api container image to deploy.
 
 [horizontal]
 type:: dict
-default: :: 
+default: ::
 [source,yaml]
 ----
 app.kubernetes.io/name: 'lieutenant-api'
@@ -136,7 +136,7 @@ as a label selector for pods.
 == `api.default_githost`
 
 [horizontal]
-type:: string 
+type:: string
 default:: ``
 
 
@@ -145,7 +145,7 @@ The githost to be used by default for new tenants.
 == `api.steward_image`
 
 [horizontal]
-type:: string 
+type:: string
 default:: `docker.io/projectsyn/steward:v0.3.1`
 
 Image to use in generated `Steward` deployment manifests.
@@ -155,7 +155,7 @@ Image to use in generated `Steward` deployment manifests.
 == `api.ingress.host`
 
 [horizontal]
-type:: string 
+type:: string
 default:: `lieutenant.todo`
 
 Defines the FQDN of the API ingress, should be overwritten on the cluster level.
@@ -167,7 +167,7 @@ Defines the FQDN of the API ingress, should be overwritten on the cluster level.
 type:: dict
 default:: {}
 
-The annotations added to the created ingress. Needs to be set according to the 
+The annotations added to the created ingress. Needs to be set according to the
 deployed ingress controller.
 
 
@@ -195,8 +195,8 @@ users:
     name: api-access-vshn-portal-prod
 ----
 
-A list of users that have permission to access the API. These entries translate 
-to kubernetes subjects and can reference a `Group`, `User`, or `ServiceAccount`. 
+A list of users that have permission to access the API. These entries translate
+to kubernetes subjects and can reference a `Group`, `User`, or `ServiceAccount`.
 Each specified `ServiceAccount` will be created.
 
 
@@ -207,7 +207,7 @@ type:: list
 default:: []
 
 Role based access control to the created tenant resources. Lieutenant creates a `Role`
-for each tenant. 
+for each tenant.
 
 
 [source,yaml]
@@ -227,8 +227,8 @@ tenant_rbac:
         kind: 'User'
 ----
 
-The example configuration above will grant user `u-bar-1` and service account `sa-bar` read access to 
-all Clusters owned by Tenant `t-foo-324`. And it will grant group `g-buzz` and user `u-bar-1` 
+The example configuration above will grant user `u-bar-1` and service account `sa-bar` read access to
+all Clusters owned by Tenant `t-foo-324`. And it will grant group `g-buzz` and user `u-bar-1`
 read access to all Clusters owned by Tenant `t-foo-1`.
 
 This can usually only be configured after the initial setup of lieutenant.
@@ -241,9 +241,9 @@ This can usually only be configured after the initial setup of lieutenant.
 type:: list
 default:: []
 
-A list of GitLab instances Lieutenant will be able to connect to for repository creation. 
+A list of GitLab instances Lieutenant will be able to connect to for repository creation.
 
-A GitLab toke with `api` scope need to be accessible through vault. See the 
+A GitLab toke with `api` scope need to be accessible through vault. See the
 xref:how-tos/setup-githost.adoc[setup githost] how-to for further details.
 
 ----
