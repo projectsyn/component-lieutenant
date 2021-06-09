@@ -5,9 +5,9 @@ local inv = kap.inventory();
 local params = inv.parameters.lieutenant;
 
 {
-  ['%s' % [ std.asciiLower(a.name) ]]: kube.RoleBinding(a.name) {
+  ['%s' % [ std.asciiLower(a.tenant) ]]: kube.RoleBinding(a.tenant) {
     metadata: {
-      name: a.name,
+      name: a.tenant,
       namespace: params.namespace,
     },
     roleRef: {

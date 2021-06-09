@@ -5,7 +5,23 @@ parameters:
         enabled: false
     api:
       default_githost: gitlab-com
-    tenant_access: []
+    tenant_access:
+      - tenant: "t-foo-124"
+        subjects:
+          - name: "u-bar-1"
+            kind: "User"
+      - tenant: "t-foo-324"
+        subjects:
+          - name: "u-bar-2"
+            kind: "User"
+          - name: "u-bar-1"
+            kind: "User"
+      - tenant: "t-foo-1"
+        subjects:
+          - name: "g-buzz"
+            kind: "Group"
+          - name: "u-bar-2"
+            kind: "User"
     githosts:
       - name: gitlab-com
         endpoint: 'https://gitlab.com'

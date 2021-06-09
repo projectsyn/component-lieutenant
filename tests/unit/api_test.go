@@ -10,8 +10,8 @@ import (
 
 	appv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
+	netv1b1 "k8s.io/api/networking/v1beta1"
 	rbacv1 "k8s.io/api/rbac/v1"
-  netv1b1 "k8s.io/api/networking/v1beta1"
 	"sigs.k8s.io/yaml"
 )
 
@@ -43,38 +43,36 @@ func Test_APIDeployment(t *testing.T) {
 }
 
 func Test_APIIngress(t *testing.T) {
-  ing := &netv1b1.Ingress{}
-  data, err := ioutil.ReadFile(testPath + "/20_api/ingress-lieutenant-api.yaml")
+	ing := &netv1b1.Ingress{}
+	data, err := ioutil.ReadFile(testPath + "/20_api/ingress-lieutenant-api.yaml")
 	require.NoError(t, err)
 	err = yaml.UnmarshalStrict(data, ing)
 	require.NoError(t, err)
 	assert.Equal(t, api, ing.Name)
 	assert.Equal(t, namespace, ing.Namespace)
 
-
-  svc := &corev1.Service{}
-  data, err = ioutil.ReadFile(testPath + "/20_api/service-lieutenant-api.yaml")
+	svc := &corev1.Service{}
+	data, err = ioutil.ReadFile(testPath + "/20_api/service-lieutenant-api.yaml")
 	require.NoError(t, err)
 	err = yaml.UnmarshalStrict(data, svc)
 	require.NoError(t, err)
 	assert.Equal(t, api, svc.Name)
 	assert.Equal(t, namespace, svc.Namespace)
 
-  require.NotEmpty(t, ing.Spec.Rules)
-  assert.Equal(t, "lieutenant.todo", ing.Spec.Rules[0].Host)
-  require.NotEmpty(t, ing.Spec.Rules[0].HTTP.Paths)
-  p := ing.Spec.Rules[0].HTTP.Paths[0]
-  require.Equal(t, "/", p.Path)
-  require.Equal(t, svc.Name, p.Backend.ServiceName)
+	require.NotEmpty(t, ing.Spec.Rules)
+	assert.Equal(t, "lieutenant.todo", ing.Spec.Rules[0].Host)
+	require.NotEmpty(t, ing.Spec.Rules[0].HTTP.Paths)
+	p := ing.Spec.Rules[0].HTTP.Paths[0]
+	require.Equal(t, "/", p.Path)
+	require.Equal(t, svc.Name, p.Backend.ServiceName)
 
-
-  deploy := &appv1.Deployment{}
+	deploy := &appv1.Deployment{}
 	data, err = ioutil.ReadFile(testPath + "/20_api/deployment-lieutenant-api.yaml")
 	require.NoError(t, err)
 	err = yaml.UnmarshalStrict(data, deploy)
 	require.NoError(t, err)
 
-  assert.Equal(t, deploy.Spec.Selector.MatchLabels, svc.Spec.Selector)
+	assert.Equal(t, deploy.Spec.Selector.MatchLabels, svc.Spec.Selector)
 }
 
 func Test_APIRBAC(t *testing.T) {
