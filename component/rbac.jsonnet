@@ -18,5 +18,5 @@ local params = inv.parameters.lieutenant;
     subjects: a.subjects,
 
   }
-  for a in params.tenant_access
+  for a in params.tenant_rbac
 }

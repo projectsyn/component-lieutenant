@@ -5,7 +5,7 @@ parameters:
         enabled: false
     api:
       default_githost: gitlab-com
-    tenant_access:
+    tenant_rbac:
       - tenant: "t-foo-124"
         subjects:
           - name: "u-bar-1"

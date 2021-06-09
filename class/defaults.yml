@@ -2,9 +2,9 @@ parameters:
   lieutenant:
     namespace: lieutenant
     operator:
-      git_tag: v0.5.3
-      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:git_tag}/deploy
-      image: 'docker.io/projectsyn/lieutenant-operator:${lieutenant:operator:git_tag}'
+      version: v0.5.3
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:version}/deploy
+      image: 'docker.io/projectsyn/lieutenant-operator:${lieutenant:operator:version}'
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-operator'
         'app.kubernetes.io/part-of': 'project-syn'
@@ -16,13 +16,13 @@ parameters:
         addr: vault.todo
         path: kv
     api:
-      git_tag: v0.6.0
-      image: 'docker.io/projectsyn/lieutenant-api:${lieutenant:api:git_tag}'
-      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:git_tag}/deploy
+      version: v0.6.0
+      image: 'docker.io/projectsyn/lieutenant-api:${lieutenant:api:version}'
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:version}/deploy
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-api'
         'app.kubernetes.io/part-of': 'project-syn'
-      default_githost: gitlab-vshn
+      default_githost: ''
       steward_image: docker.io/projectsyn/steward:v0.3.1
       ingress:
         host: lieutenant.todo
@@ -30,11 +30,5 @@ parameters:
       users:
         - kind: ServiceAccount
           name: api-access-vshn-portal-prod
-    tenant_access: []
-    githosts:
-      - name: gitlab-vshn
-        endpoint: https://git.vshn.net/
-        token: '?{vaultkv:${cluster:tenant}/${cluster:name}/lieutenant/githosts/gitlab-vshn/token}'
-        host_keys: |
-          git.vshn.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnE1dMkh+3uHWck+cTvQqeNUW0lj1uVcIC9JX2Tg6gmkKCYA73+o+I7vo4g6nPtSOAfITvYdHJLzwE9GwlSFsXHMR9q0ErWl2wC+w6FawLMz9//5XqiBi2qq/8WnWp3ecY16jDoGRW4eymT+USFHKJVi696XBy3WE/0BBapPZ58WPqkKN6A27qkIK6FehI80f+zN4ZqikdwWuCFs35fsimcmLnWqWPm8zbOkgCiB+ov4O/xmRNHwJWCk/qzU6X/M9YtMXzAa5mjwDvcHSAizFD3a3Fv68G1VsmRZ0THLrRKM/WOxrWNZoimSNgyjTzoCwiKeckvL5+hpNcNSW+eBPt
-          git.vshn.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
+    tenant_rbac: []
+    githosts: []
