@@ -1,0 +1,46 @@
+= Connection to GitLab
+
+The Lieutenant Operator needs to be able to connect to the GitLab API to create
+repositories for tenants and clusters. The following steps need to be performed 
+before deploying Lieutenant.
+
+== Get GitLab Token
+
+. Visit the GitLab instance you'd like to use.
+. Login with the user that has the permissions necessary to write to the group 
+you want to store your Project Syn repositories.
+. Visit `\https://yourgitlab/profile/personal_access_tokens` and create a token
+with `api`, `read_repository`, and `write_repository` scope.
+
+
+== Add Token to Vault
+
+The generated token now needs to be stored inside the secret key manager.
+
+{source,console}
+----
+vault kv put -cas=0 clusters/kv/${TENANT_ID}/${CLUSTER_ID}/Lieutenant/githosts/your-gitlab token=${TOKEN}
+----
+
+== Reference Token in Configuration
+
+With the token added to vault it can now be referenced by the GitHost configuration.
+
+
+----
+githosts:
+  - name: your-gitlab
+    endpoint: https://git.yourdomain.net/
+    token: '?{vaultkv:${cluster:tenant}/${cluster:name}/lieutenant/githosts/your-gitlab/token}'
+    host_keys: |
+      git.yourdomain.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnE1dMkh+3uHWck+cTvQqeNUW0lj1uVcIC9JX2Tg6gmkKCYA73+o+I7vo4g6nPtSOAfITvYdHJLzwE9GwlSFsXHMR9q0ErWl2wC+w6FawLMz9//5XqiBi2qq/8WnWp3ecY16jDoGRW4eymT+USFHKJVi696XBy3WE/0BBapPZ58WPqkKN6A27qkIK6FehI80f+zN4ZqikdwWuCFs35fsimcmLnWqWPm8zbOkgCiB+ov4O/xmRNHwJWCk/qzU6X/M9YtMXzAa5mjwDvcHSAizFD3a3Fv68G1VsmRZ0THLrRKM/WOxrWNZoimSNgyjTzoCwiKeckvL5+hpNcNSW+eBPt
+      git.yourdomain.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
+----
+
+The `host_keys` need to contain the SSH public keys of your GitLab server. You can get these easily with
+
+{source,console}
+----
+ssh-keyscan git.yourdomain.net
+----
+

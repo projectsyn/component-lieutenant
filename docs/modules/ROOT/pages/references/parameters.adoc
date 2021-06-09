@@ -244,7 +244,7 @@ default:: []
 A list of GitLab instances Lieutenant will be able to connect to for repository creation. 
 
 A GitLab toke with `api` scope need to be accessible through vault. See the 
-xref:how-tos/setup-githost.adoc[parameters] reference for further details.
+xref:how-tos/setup-githost.adoc[setup githost] how-to for further details.
 
 ----
 githosts:
