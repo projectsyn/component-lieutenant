@@ -19,7 +19,7 @@ The generated token now needs to be stored inside the secret key manager.
 
 {source,console}
 ----
-vault kv put -cas=0 clusters/kv/${TENANT_ID}/${CLUSTER_ID}/Lieutenant/githosts/your-gitlab token=${TOKEN}
+vault kv put -cas=0 clusters/kv/${TENANT_ID}/${CLUSTER_ID}/lieutenant/githosts/your-gitlab token=${TOKEN}
 ----
 
 == Reference Token in Configuration
@@ -43,4 +43,3 @@ The `host_keys` need to contain the SSH public keys of your GitLab server. You c
 ----
 ssh-keyscan git.yourdomain.net
 ----
-

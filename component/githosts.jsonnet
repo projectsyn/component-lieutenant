@@ -6,7 +6,7 @@ local inv = kap.inventory();
 local params = inv.parameters.lieutenant;
 
 {
-  ['%s' % [ std.asciiLower(git.name) ]]: kube.Secret(git.name) {
+  [std.asciiLower(git.name)]: kube.Secret(git.name) {
     metadata: {
       name: git.name,
       namespace: params.namespace,

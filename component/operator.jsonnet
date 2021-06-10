@@ -64,7 +64,7 @@ local objects = [
 
 
 {
-  ['%s' % [ std.asciiLower(obj.kind) ]]: obj {
+  [std.asciiLower(obj.kind)]: obj {
     metadata+: {
       namespace: params.namespace,
       labels+: params.operator.common_labels,

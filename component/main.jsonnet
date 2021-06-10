@@ -6,9 +6,5 @@ local inv = kap.inventory();
 local params = inv.parameters.lieutenant;
 
 {
-  '01_namespace': kube.Namespace(params.namespace) {
-    metadata: {
-      name: params.namespace,
-    },
-  },
+  '01_namespace': kube.Namespace(params.namespace),
 }

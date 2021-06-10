@@ -24,7 +24,7 @@ The specific lieutenant-operator version to deploy.
 
 [horizontal]
 type:: string
-default:: `docker.io/projectsyn/lieutenant-operator:v0.5.3`
+default:: `docker.io/projectsyn/lieutenant-operator:${lieutenant:operator:version}`
 
 The lieutenant-operator container image to deploy.
 
@@ -40,7 +40,7 @@ app.kubernetes.io/name: 'lieutenant-operator'
 app.kubernetes.io/part-of: 'project-syn'
 ----
 
-Common label to add to each resource of the lieutenant-operator. Will be used
+Common labels to add to each resource of the lieutenant-operator. Will be used
 as a label selector for pods.
 
 
@@ -76,7 +76,8 @@ URL of the default global configuration git repository. Its value will be applie
 type:: bool
 default:: `true`
 
-Whether to create any Vault secrets.
+Whether to enable the Lieutenant Operator Vault integration.
+If set to true, `operator.vault.addr` and `operator.vault.path` must be set to point to a valid Vault instance and  a valid KV secret engine of that Vault instance.
 
 
 == `operator.vault.addr`
@@ -112,7 +113,7 @@ The specific lieutenant-api version to deploy.
 
 [horizontal]
 type:: string
-default:: `docker.io/projectsyn/lieutenant-api:v0.6.0`
+default:: `docker.io/projectsyn/lieutenant-api:${lieutenant:api:version}`
 
 The lieutenant-api container image to deploy.
 
@@ -231,7 +232,7 @@ The example configuration above will grant user `u-bar-1` and service account `s
 all Clusters owned by Tenant `t-foo-324`. And it will grant group `g-buzz` and user `u-bar-1`
 read access to all Clusters owned by Tenant `t-foo-1`.
 
-This can usually only be configured after the initial setup of lieutenant.
+This can usually only be configured after the initial setup of Lieutenant.
 
 
 
@@ -243,7 +244,7 @@ default:: []
 
 A list of GitLab instances Lieutenant will be able to connect to for repository creation.
 
-A GitLab toke with `api` scope need to be accessible through vault. See the
+A GitLab toke with `api` scope need to be accessible through Vault. See the
 xref:how-tos/setup-githost.adoc[setup githost] how-to for further details.
 
 ----
@@ -255,4 +256,3 @@ githosts:
       git.vshn.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnE1dMkh+3uHWck+cTvQqeNUW0lj1uVcIC9JX2Tg6gmkKCYA73+o+I7vo4g6nPtSOAfITvYdHJLzwE9GwlSFsXHMR9q0ErWl2wC+w6FawLMz9//5XqiBi2qq/8WnWp3ecY16jDoGRW4eymT+USFHKJVi696XBy3WE/0BBapPZ58WPqkKN6A27qkIK6FehI80f+zN4ZqikdwWuCFs35fsimcmLnWqWPm8zbOkgCiB+ov4O/xmRNHwJWCk/qzU6X/M9YtMXzAa5mjwDvcHSAizFD3a3Fv68G1VsmRZ0THLrRKM/WOxrWNZoimSNgyjTzoCwiKeckvL5+hpNcNSW+eBPt
       git.vshn.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
 ----
-
