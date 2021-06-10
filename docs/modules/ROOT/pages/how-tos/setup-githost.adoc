@@ -1,8 +1,7 @@
 = Connection to GitLab
 
-The Lieutenant Operator needs to be able to connect to the GitLab API to create
-repositories for tenants and clusters. The following steps need to be performed
-before deploying Lieutenant.
+The Lieutenant Operator needs to be able to connect to the GitLab API to create repositories for tenants and clusters
+The following steps need to be performed before deploying Lieutenant.
 
 == Get GitLab Token
 
@@ -17,7 +16,7 @@ with `api`, `read_repository`, and `write_repository` scope.
 
 The generated token now needs to be stored inside the secret key manager.
 
-{source,console}
+[source,shell]
 ----
 vault kv put -cas=0 clusters/kv/${TENANT_ID}/${CLUSTER_ID}/lieutenant/githosts/your-gitlab token=${TOKEN}
 ----
@@ -27,9 +26,10 @@ vault kv put -cas=0 clusters/kv/${TENANT_ID}/${CLUSTER_ID}/lieutenant/githosts/y
 With the token added to vault it can now be referenced by the GitHost configuration.
 
 
+[source,yaml]
 ----
 githosts:
-  - name: your-gitlab
+  your-gitlab:
     endpoint: https://git.yourdomain.net/
     token: '?{vaultkv:${cluster:tenant}/${cluster:name}/lieutenant/githosts/your-gitlab/token}'
     host_keys: |
@@ -37,9 +37,11 @@ githosts:
       git.yourdomain.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
 ----
 
-The `host_keys` need to contain the SSH public keys of your GitLab server. You can get these easily with
+The `host_keys` need to contain the SSH public keys of your GitLab server.
+You can get these easily with:
 
-{source,console}
+[source,shell]
 ----
 ssh-keyscan git.yourdomain.net
 ----
+

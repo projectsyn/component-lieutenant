@@ -4,12 +4,14 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.lieutenant;
 
-local role = std.parseJson(kap.yaml_load('lieutenant/manifests/api/role.yaml'));
-local service_account = std.parseJson(kap.yaml_load('lieutenant/manifests/api/service_account.yaml'));
-local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/api/role_binding.yaml'));
-local deployment = std.parseJson(kap.yaml_load('lieutenant/manifests/api/deployment.yaml'));
-local service = std.parseJson(kap.yaml_load('lieutenant/manifests/api/service.yaml'));
+local role = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/role.yaml'));
+local service_account = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/service_account.yaml'));
+local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/role_binding.yaml'));
+local deployment = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/deployment.yaml'));
+local service = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/service.yaml'));
 
+local image = params.images.api.registry + '/' + params.images.api.repository + ':' + params.images.api.version;
+local steward_image = params.images.steward.registry + '/' + params.images.steward.repository + ':' + params.images.steward.version;
 
 local ingress = kube.Ingress('lieutenant-api') {
   metadata: std.prune({
@@ -31,6 +33,12 @@ local ingress = kube.Ingress('lieutenant-api') {
             },
           ],
         },
+      },
+    ],
+    tls: [
+      {
+        hosts: [ params.api.ingress.host ],
+        secretName: 'lieutenant-api-cert',
       },
     ],
   },
@@ -62,7 +70,7 @@ local user_role = kube.Role('lieutenant-api-user') {
   ],
 };
 
-local user_role_binding = std.prune(kube.RoleBinding('lieutenant-api-user') {
+local user_role_binding = kube.RoleBinding('lieutenant-api-user') {
   metadata: {
     name: 'lieutenant-api-user',
   },
@@ -72,7 +80,7 @@ local user_role_binding = std.prune(kube.RoleBinding('lieutenant-api-user') {
     apiGroup: 'rbac.authorization.k8s.io',
   },
   subjects: params.api.users,
-});
+};
 
 local user_service_accounts = [
   kube.ServiceAccount(u.name) {
@@ -105,25 +113,30 @@ local objects = [
           labels+: params.api.common_labels,
         },
         spec+: {
-          containers: [ deployment.spec.template.spec.containers[0] {
-            image: params.api.image,
-            env: [
-              if e.name == 'STEWARD_IMAGE'
-              then
-                {
-                  name: 'STEWARD_IMAGE',
-                  value: params.api.steward_image,
-                }
-              else e
-
-              for e in super.env + [
-                {
-                  name: 'DEFAULT_API_SECRET_REF_NAME',
-                  value: params.api.default_githost,
-                },
-              ]
-            ],
-          } ],
+          containers: [
+            if c.name == 'lieutenant-api' then
+              c {
+                image: image,
+                env: [
+                  if e.name == 'STEWARD_IMAGE' then
+                    {
+                      name: 'STEWARD_IMAGE',
+                      value: steward_image,
+                    }
+                  else
+                    e
+                  for e in super.env + [
+                    {
+                      name: 'DEFAULT_API_SECRET_REF_NAME',
+                      value: params.api.default_githost,
+                    },
+                  ]
+                ],
+              }
+            else
+              c
+            for c in super.containers
+          ],
         },
       },
     },

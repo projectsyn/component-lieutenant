@@ -1,10 +1,22 @@
 parameters:
   lieutenant:
     namespace: lieutenant
+    images:
+      operator:
+        registry: docker.io
+        repository: projectsyn/lieutenant-operator
+        version: v0.5.3
+      api:
+        registry: docker.io
+        repository: projectsyn/lieutenant-api
+        version: v0.6.0
+      steward:
+        registry: docker.io
+        repository: projectsyn/steward
+        version: v0.3.1
     operator:
-      version: v0.5.3
-      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:version}/deploy
-      image: 'docker.io/projectsyn/lieutenant-operator:${lieutenant:operator:version}'
+      manifest_version: v0.5.3
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/deploy
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-operator'
         'app.kubernetes.io/part-of': 'project-syn'
@@ -16,19 +28,18 @@ parameters:
         addr: vault.todo
         path: kv
     api:
-      version: v0.6.0
-      image: 'docker.io/projectsyn/lieutenant-api:${lieutenant:api:version}'
-      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:version}/deploy
+      manifest_version: v0.6.0
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:manifest_version}/deploy
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-api'
         'app.kubernetes.io/part-of': 'project-syn'
       default_githost: ''
-      steward_image: docker.io/projectsyn/steward:v0.3.1
       ingress:
         host: lieutenant.todo
         annotations: {}
+        tls: true
       users:
         - kind: ServiceAccount
-          name: api-access-vshn-portal-prod
-    tenant_rbac: []
-    githosts: []
+          name: lieutenant-api-user
+    tenant_rbac: {}
+    githosts: {}

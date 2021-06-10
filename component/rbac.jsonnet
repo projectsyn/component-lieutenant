@@ -5,18 +5,18 @@ local inv = kap.inventory();
 local params = inv.parameters.lieutenant;
 
 {
-  [std.asciiLower(a.tenant)]: kube.RoleBinding(a.tenant) {
+  [std.asciiLower(ten)]: kube.RoleBinding(ten) {
     metadata: {
-      name: a.tenant,
+      name: ten,
       namespace: params.namespace,
     },
     roleRef: {
       kind: 'Role',
       apiGroup: 'rbac.authorization.k8s.io',
-      name: a.tenant,
+      name: ten,
     },
-    subjects: a.subjects,
+    subjects: params.tenant_rbac[ten],
 
   }
-  for a in params.tenant_rbac
+  for ten in std.objectFields(params.tenant_rbac)
 }

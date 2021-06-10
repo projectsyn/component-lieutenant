@@ -6,24 +6,21 @@ parameters:
     api:
       default_githost: gitlab-com
     tenant_rbac:
-      - tenant: "t-foo-124"
-        subjects:
-          - name: "u-bar-1"
-            kind: "User"
-      - tenant: "t-foo-324"
-        subjects:
-          - name: "u-bar-2"
-            kind: "User"
-          - name: "u-bar-1"
-            kind: "User"
-      - tenant: "t-foo-1"
-        subjects:
-          - name: "g-buzz"
-            kind: "Group"
-          - name: "u-bar-2"
-            kind: "User"
+      t-foo-124:
+        - name: "u-bar-1"
+          kind: "User"
+      t-foo-324:
+        - name: "u-bar-2"
+          kind: "User"
+        - name: "u-bar-1"
+          kind: "User"
+      t-foo-1:
+        - name: "g-buzz"
+          kind: "Group"
+        - name: "u-bar-2"
+          kind: "User"
     githosts:
-      - name: gitlab-com
+      gitlab-com:
         endpoint: 'https://gitlab.com'
         token: ''
         host_keys: |

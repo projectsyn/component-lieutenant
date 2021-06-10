@@ -6,16 +6,15 @@ local inv = kap.inventory();
 local params = inv.parameters.lieutenant;
 
 {
-  [std.asciiLower(git.name)]: kube.Secret(git.name) {
-    metadata: {
-      name: git.name,
+  [std.asciiLower(name)]: kube.Secret(name) {
+    metadata+: {
       namespace: params.namespace,
     },
     stringData: {
-      endpoint: git.endpoint,
-      token: git.token,
-      hostKeys: git.host_keys,
+      endpoint: params.githosts[name].endpoint,
+      token: params.githosts[name].token,
+      hostKeys: params.githosts[name].host_keys,
     },
   }
-  for git in params.githosts
+  for name in std.objectFields(params.githosts)
 }
