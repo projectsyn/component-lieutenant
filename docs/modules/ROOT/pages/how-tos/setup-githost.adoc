@@ -1,6 +1,6 @@
 = Connection to GitLab
 
-The Lieutenant Operator needs to be able to connect to the GitLab API to create repositories for tenants and clusters
+The Lieutenant Operator needs to be able to connect to the GitLab API to create repositories for tenants and clusters.
 The following steps need to be performed before deploying Lieutenant.
 
 == Get GitLab Token
@@ -23,7 +23,7 @@ vault kv put -cas=0 clusters/kv/${TENANT_ID}/${CLUSTER_ID}/lieutenant/githosts/y
 
 == Reference Token in Configuration
 
-With the token added to vault it can now be referenced by the GitHost configuration.
+With the token added to Vault it can now be referenced by the GitHost configuration.
 
 
 [source,yaml]
@@ -44,4 +44,3 @@ You can get these easily with:
 ----
 ssh-keyscan git.yourdomain.net
 ----
-

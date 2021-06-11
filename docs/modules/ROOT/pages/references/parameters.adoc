@@ -56,8 +56,8 @@ Defines whether the annotation to protect for accidental deletion should be set 
 type:: string
 default:: ``
 
-URL of the default global configuration git repository.
-Its value will be applied to `tenant.Spec.GlobalGitRepoURL`.
+URL of the default global configuration Git repository.
+The value of this parameter will be used as the default value for `.spec.globalGitRepoURL` on new tenant objects.
 
 == `operator.vault.enabled`
 
@@ -99,7 +99,7 @@ app.kubernetes.io/name: 'lieutenant-api'
 app.kubernetes.io/part-of: 'project-syn'
 ----
 
-Common label to add to each resource of the Lieutenant API.
+Common labels to add to each resource of the Lieutenant API.
 Will be used as a label selector for pods.
 
 
@@ -149,7 +149,7 @@ annotations:
 type:: bool
 default:: `true`
 
-Whether to enable tls for this ingress.
+Whether to enable TLS for the ingress.
 This requires either to set the correct `cert-manager` annotations or to add the certificate manually to the secret `lieutenant-api-cert`.
 
 
@@ -167,8 +167,8 @@ users:
 ----
 
 A list of users that have permission to access the API
-These entries translate to kubernetes subjects and can reference a `Group`, `User`, or `ServiceAccount`.
-Each specified `ServiceAccount` will be created.
+These entries translate to Kubernetes subjects and can reference a `Group`, `User`, or `ServiceAccount`.
+For entries with type `ServiceAccount` the component will create the corresponding service account object.
 
 
 == `tenant_rbac`
@@ -209,7 +209,7 @@ default:: {}
 
 A list of GitLab instances Lieutenant will be able to connect to for repository creation.
 
-A GitLab toke with `api` scope need to be accessible through Vault.
+A GitLab token with `api` scope need to be accessible through Vault.
 See the xref:how-tos/setup-githost.adoc[setup githost] how-to for further details.
 
 ----
