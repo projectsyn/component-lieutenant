@@ -15,7 +15,7 @@ parameters:
         repository: projectsyn/steward
         version: v0.3.1
     operator:
-      manifest_version: ${images:operator:version}
+      manifest_version: ${lieutenant:images:operator:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/deploy
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-operator'
@@ -28,7 +28,7 @@ parameters:
         addr: vault.todo
         path: kv
     api:
-      manifest_version: v0.6.0
+      manifest_version: ${lieutenant:images:api:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:manifest_version}/deploy
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-api'

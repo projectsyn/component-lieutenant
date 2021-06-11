@@ -35,12 +35,15 @@ local ingress = kube.Ingress('lieutenant-api') {
         },
       },
     ],
-    tls: [
-      {
-        hosts: [ params.api.ingress.host ],
-        secretName: 'lieutenant-api-cert',
-      },
-    ],
+    tls: if params.api.ingress.tls then
+      [
+        {
+          hosts: [ params.api.ingress.host ],
+          secretName: 'lieutenant-api-cert',
+        },
+      ]
+    else
+      [],
   },
 };
 

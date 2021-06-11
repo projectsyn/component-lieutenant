@@ -6,10 +6,8 @@ The following steps need to be performed before deploying Lieutenant.
 == Get GitLab Token
 
 . Visit the GitLab instance you'd like to use.
-. Login with the user that has the permissions necessary to write to the group
-you want to store your Project Syn repositories.
-. Visit `\https://yourgitlab/profile/personal_access_tokens` and create a token
-with `api`, `read_repository`, and `write_repository` scope.
+. Login with the user that has the permissions necessary to write to the group you want to store your Project Syn repositories.
+. Visit `\https://yourgitlab/profile/personal_access_tokens` and create a token with `api`, `read_repository`, and `write_repository` scope.
 
 
 == Add Token to Vault

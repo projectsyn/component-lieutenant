@@ -66,6 +66,11 @@ func Test_APIIngress(t *testing.T) {
 	require.Equal(t, "/", p.Path)
 	require.Equal(t, svc.Name, p.Backend.ServiceName)
 
+  require.NotEmpty(t, ing.Spec.TLS)
+  require.NotEmpty(t, ing.Spec.TLS[0].Hosts)
+	assert.Equal(t, ing.Spec.Rules[0].Host, ing.Spec.TLS[0].Hosts[0])
+
+
 	deploy := &appv1.Deployment{}
 	data, err = ioutil.ReadFile(testPath + "/20_api/deployment-lieutenant-api.yaml")
 	require.NoError(t, err)
