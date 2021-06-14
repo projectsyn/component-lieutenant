@@ -1,5 +1,6 @@
-= lieutenant
+= Lieutenant
 
-lieutenant is a Commodore component to manage lieutenant.
+Lieutenant is a Commodore component to manage lieutenant.
 
 See the xref:references/parameters.adoc[parameters] reference for further details.
+

@@ -1,12 +1,74 @@
 parameters:
   kapitan:
+    dependencies:
+      # CRDs
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_clusters_crd.yaml
+        output_path: manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_clusters_crd.yaml
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_gitrepos_crd.yaml
+        output_path: manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_gitrepos_crd.yaml
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_tenants_crd.yaml
+        output_path: manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_tenants_crd.yaml
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_tenanttemplates_crd.yaml
+        output_path: manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_tenanttemplates_crd.yaml
+      # operator
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/deployment.yaml
+        output_path: manifests/operator/${lieutenant:operator:manifest_version}/deployment.yaml
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/role.yaml
+        output_path: manifests/operator/${lieutenant:operator:manifest_version}/role.yaml
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/role_binding.yaml
+        output_path: manifests/operator/${lieutenant:operator:manifest_version}/role_binding.yaml
+      - type: https
+        source: ${lieutenant:operator:manifest_url}/service_account.yaml
+        output_path: manifests/operator/${lieutenant:operator:manifest_version}/service_account.yaml
+      # API
+      - type: https
+        source: ${lieutenant:api:manifest_url}/deployment.yaml
+        output_path: manifests/api/${lieutenant:api:manifest_version}/deployment.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/service.yaml
+        output_path: manifests/api/${lieutenant:api:manifest_version}/service.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/role.yaml
+        output_path: manifests/api/${lieutenant:api:manifest_version}/role.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/role_binding.yaml
+        output_path: manifests/api/${lieutenant:api:manifest_version}/role_binding.yaml
+      - type: https
+        source: ${lieutenant:api:manifest_url}/service_account.yaml
+        output_path: manifests/api/${lieutenant:api:manifest_version}/service_account.yaml
     compile:
       - input_paths:
           - lieutenant/component/app.jsonnet
         input_type: jsonnet
         output_path: apps/
       - input_paths:
+          - lieutenant/manifests/crds/${lieutenant:operator:manifest_version}/
+        input_type: copy
+        output_path: lieutenant/00_crds/
+      - input_paths:
           - lieutenant/component/main.jsonnet
         input_type: jsonnet
         output_path: lieutenant/
-
+      - input_paths:
+          - lieutenant/component/operator.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/10_operator/
+      - input_paths:
+          - lieutenant/component/api.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/20_api/
+      - input_paths:
+          - lieutenant/component/githosts.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/30_githosts/
+      - input_paths:
+          - lieutenant/component/rbac.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/40_rbac/

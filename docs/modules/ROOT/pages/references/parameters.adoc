@@ -6,14 +6,218 @@ The parent key for all of the following parameters is `lieutenant`.
 
 [horizontal]
 type:: string
-default:: `syn-lieutenant`
+default:: `lieutenant`
 
 The namespace in which to deploy this component.
 
+== `images`
 
-== Example
+[horizontal]
+type:: dictionary
+
+Dictionary containing the container images used by this component.
+
+== `operator.common_labels`
+
+[horizontal]
+type:: dict
+default: ::
+[source,yaml]
+----
+app.kubernetes.io/name: 'lieutenant-operator'
+app.kubernetes.io/part-of: 'project-syn'
+----
+
+Common labels to add to each resource of the Lieutenant Operator.
+Will be used as a label selector for pods.
+
+
+== `operator.default_deletion_policy`
+
+[horizontal]
+type:: string
+default:: `Archive`
+
+Sets what deletion policy for external resources (Git, Vault) should be used by default.
+One of `Archive`, `Delete`, `Retain`.
+
+
+== `operator.deletion_protection`
+
+[horizontal]
+type:: bool
+default:: `false`
+
+Defines whether the annotation to protect for accidental deletion should be set by default.
+
+== `operator.default_global_git_repo`
+
+[horizontal]
+type:: string
+default:: ``
+
+URL of the default global configuration Git repository.
+The value of this parameter will be used as the default value for `.spec.globalGitRepoURL` on new tenant objects.
+
+== `operator.vault.enabled`
+
+[horizontal]
+type:: bool
+default:: `true`
+
+Whether to enable the Lieutenant Operator Vault integration.
+If set to true, `operator.vault.addr` and `operator.vault.path` must be set to point to a valid Vault instance and a valid KV secret engine of that Vault instance.
+
+
+== `operator.vault.addr`
+
+[horizontal]
+type:: string
+default:: `vault.todo`
+
+
+Address to the Vault instance.
+
+
+== `operator.vault.path`
+
+[horizontal]
+type:: string
+default:: `kv`
+
+The mount path of the KV secret engine to be used.
+
+
+== `api.common_labels`
+
+[horizontal]
+type:: dict
+default: ::
+[source,yaml]
+----
+app.kubernetes.io/name: 'lieutenant-api'
+app.kubernetes.io/part-of: 'project-syn'
+----
+
+Common labels to add to each resource of the Lieutenant API.
+Will be used as a label selector for pods.
+
+
+== `api.default_githost`
+
+[horizontal]
+type:: string
+default:: ``
+
+
+The githost to be used by default for new tenants.
+
+
+== `api.ingress.host`
+
+[horizontal]
+type:: string
+default:: `lieutenant.todo`
+
+Defines the FQDN of the API ingress, should be overwritten on the cluster level.
+
+
+== `api.ingress.annotations`
+
+[horizontal]
+type:: dict
+default:: {}
+
+The annotations added to the created ingress
+Needs to be set according to the deployed ingress controller.
+
 
 [source,yaml]
 ----
-namespace: example-namespace
+annotations:
+  cert-manager.io/cluster-issuer: letsencrypt-production
+  kubernetes.io/ingress.class: nginx
+  nginx.ingress.kubernetes.io/cors-allow-credentials: 'true'
+  nginx.ingress.kubernetes.io/cors-allow-methods: GET, POST, DELETE
+  nginx.ingress.kubernetes.io/cors-allow-origin: http://localhost:8080
+  nginx.ingress.kubernetes.io/enable-cors: 'true'
+----
+
+== `api.ingress.tls`
+
+[horizontal]
+type:: bool
+default:: `true`
+
+Whether to enable TLS for the ingress.
+This requires either to set the correct `cert-manager` annotations or to add the certificate manually to the secret `lieutenant-api-cert`.
+
+
+== `api.users`
+
+[horizontal]
+type:: list
+default: ::
+
+[source,yaml]
+----
+users:
+  - kind: ServiceAccount
+    name: lieutenant-api-user
+----
+
+A list of users that have permission to access the API
+These entries translate to Kubernetes subjects and can reference a `Group`, `User`, or `ServiceAccount`.
+For entries with type `ServiceAccount` the component will create the corresponding service account object.
+
+
+== `tenant_rbac`
+
+[horizontal]
+type:: dict
+default:: {}
+
+Role based access control to the created tenant resources.
+Lieutenant creates a `Role` for each tenant.
+
+
+[source,yaml]
+----
+tenant_rbac:
+  t-foo-324
+    - name: 'sa-bar'
+      kind: 'ServiceAccount'
+    - name: 'u-bar-1'
+      kind: 'User'
+  t-foo-1
+    - name: 'g-buzz'
+      kind: 'Group'
+    - name: 'u-bar-1'
+      kind: 'User'
+----
+
+The example configuration above will grant user `u-bar-1` and service account `sa-bar` read access to all Clusters owned by Tenant `t-foo-324`.
+And it will grant group `g-buzz` and user `u-bar-1` read access to all Clusters owned by Tenant `t-foo-1`.
+
+This can usually only be configured after the initial setup of Lieutenant.
+
+== `githosts`
+
+[horizontal]
+type:: dict
+default:: {}
+
+A list of GitLab instances Lieutenant will be able to connect to for repository creation.
+
+A GitLab token with `api` scope need to be accessible through Vault.
+See the xref:how-tos/setup-githost.adoc[setup githost] how-to for further details.
+
+----
+githosts:
+  gitlab-vshn:
+    endpoint: https://git.vshn.net/
+    token: '?{vaultkv:${cluster:tenant}/${cluster:name}/lieutenant/githosts/gitlab-vshn/token}'
+    host_keys: |
+      git.vshn.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnE1dMkh+3uHWck+cTvQqeNUW0lj1uVcIC9JX2Tg6gmkKCYA73+o+I7vo4g6nPtSOAfITvYdHJLzwE9GwlSFsXHMR9q0ErWl2wC+w6FawLMz9//5XqiBi2qq/8WnWp3ecY16jDoGRW4eymT+USFHKJVi696XBy3WE/0BBapPZ58WPqkKN6A27qkIK6FehI80f+zN4ZqikdwWuCFs35fsimcmLnWqWPm8zbOkgCiB+ov4O/xmRNHwJWCk/qzU6X/M9YtMXzAa5mjwDvcHSAizFD3a3Fv68G1VsmRZ0THLrRKM/WOxrWNZoimSNgyjTzoCwiKeckvL5+hpNcNSW+eBPt
+      git.vshn.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
 ----

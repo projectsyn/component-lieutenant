@@ -1,3 +1,45 @@
 parameters:
   lieutenant:
-    namespace: syn-lieutenant
+    namespace: lieutenant
+    images:
+      operator:
+        registry: docker.io
+        repository: projectsyn/lieutenant-operator
+        version: v0.5.3
+      api:
+        registry: docker.io
+        repository: projectsyn/lieutenant-api
+        version: v0.6.0
+      steward:
+        registry: docker.io
+        repository: projectsyn/steward
+        version: v0.3.1
+    operator:
+      manifest_version: ${lieutenant:images:operator:version}
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/deploy
+      common_labels:
+        'app.kubernetes.io/name': 'lieutenant-operator'
+        'app.kubernetes.io/part-of': 'project-syn'
+      default_deletion_policy: Archive
+      deletion_protection: false
+      default_global_git_repo: https://github.com/projectsyn/getting-started-commodore-defaults
+      vault:
+        enabled: true
+        addr: vault.todo
+        path: kv
+    api:
+      manifest_version: ${lieutenant:images:api:version}
+      manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:manifest_version}/deploy
+      common_labels:
+        'app.kubernetes.io/name': 'lieutenant-api'
+        'app.kubernetes.io/part-of': 'project-syn'
+      default_githost: ''
+      ingress:
+        host: lieutenant.todo
+        annotations: {}
+        tls: true
+      users:
+        - kind: ServiceAccount
+          name: lieutenant-api-user
+    tenant_rbac: {}
+    githosts: {}
