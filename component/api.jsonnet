@@ -14,8 +14,7 @@ local image = params.images.api.registry + '/' + params.images.api.repository + 
 local steward_image = params.images.steward.registry + '/' + params.images.steward.repository + ':' + params.images.steward.version;
 
 local ingress = kube.Ingress('lieutenant-api') {
-  metadata: std.prune({
-    name: 'lieutenant-api',
+  metadata+: std.prune({
     annotations: params.api.ingress.annotations,
   }),
   spec: {
