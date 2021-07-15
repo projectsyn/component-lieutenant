@@ -15,7 +15,7 @@ JSONNETFMT_ARGS ?= --in-place --pad-arrays
 JSONNET_IMAGE   ?= docker.io/bitnami/jsonnet:latest
 JSONNET_DOCKER  ?= $(DOCKER_CMD) $(DOCKER_ARGS) --entrypoint=jsonnetfmt $(JSONNET_IMAGE)
 
-YAML_FILES      ?= $(shell find . -type f -not -path './vendor/*' -not -path './manifests/*' -not -path './compiled/*' \( -name '*.yaml' -or -name '*.yml' \))
+YAML_FILES      ?= $(shell find . -type f -not -path './vendor/*' -not -path './dependencies/*' -not -path './compiled/*' \( -name '*.yaml' -or -name '*.yml' \))
 YAMLLINT_ARGS   ?= --no-warnings
 YAMLLINT_CONFIG ?= .yamllint.yml
 YAMLLINT_IMAGE  ?= docker.io/cytopia/yamllint:latest
@@ -64,7 +64,8 @@ docs-vale:
 .PHONY: compile
 compile: format lint
 	@echo Compiling..
-	@$(COMMODORE_CMD) component compile . -f tests/test.yml
+	mkdir -p dependencies
+	@$(COMMODORE_CMD) component compile . -f tests/test.yml --search-paths ./dependencies
 
 .PHONY: test
 test: compile

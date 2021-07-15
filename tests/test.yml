@@ -1,6 +1,5 @@
 parameters:
   lieutenant:
-    componentPath: '.'
     operator:
       vault:
         enabled: false
