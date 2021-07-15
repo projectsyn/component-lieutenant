@@ -14,6 +14,7 @@ parameters:
         registry: docker.io
         repository: projectsyn/steward
         version: v0.3.1
+    componentPath: 'dependencies/lieutenant' # Only changed for testing
     operator:
       manifest_version: ${lieutenant:images:operator:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/deploy
