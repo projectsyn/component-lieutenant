@@ -125,6 +125,11 @@ local objects = [
                       name: 'STEWARD_IMAGE',
                       value: steward_image,
                     }
+                  else if e.name == 'LIEUTENANT_INSTANCE' then
+                    {
+                      name: 'LIEUTENANT_INSTANCE',
+                      value: params.api.lieutenant_instance,
+                    }
                   else
                     e
                   for e in super.env + [
