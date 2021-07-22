@@ -153,6 +153,14 @@ Whether to enable TLS for the ingress.
 This requires either to set the correct `cert-manager` annotations or to add the certificate manually to the secret `lieutenant-api-cert`.
 
 
+== `api.lieutenant_instance`
+
+[horizontal]
+type:: string
+default:: `${lieutenant:namespace}`
+
+Sets the env variable `LIEUTENANT_INSTANCE` to the value specified here. By default the value is set to the name of the namespace.
+
 == `api.users`
 
 [horizontal]

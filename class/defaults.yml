@@ -28,6 +28,7 @@ parameters:
         addr: vault.todo
         path: kv
     api:
+      lieutenant_instance: ${lieutenant:namespace}
       manifest_version: ${lieutenant:images:api:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-api/${lieutenant:api:manifest_version}/deploy
       common_labels:
