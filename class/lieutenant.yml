@@ -3,29 +3,29 @@ parameters:
     dependencies:
       # CRDs
       - type: https
-        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_clusters_crd.yaml
-        output_path: dependencies/lieutenant/manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_clusters_crd.yaml
+        source: ${lieutenant:operator:manifest_url}/crd/bases/syn.tools_clusters.yaml
+        output_path: dependencies/lieutenant/manifests/crd/bases/${lieutenant:operator:manifest_version}/syn.tools_clusters.yaml
       - type: https
-        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_gitrepos_crd.yaml
-        output_path: dependencies/lieutenant/manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_gitrepos_crd.yaml
+        source: ${lieutenant:operator:manifest_url}/crd/bases/syn.tools_gitrepos.yaml
+        output_path: dependencies/lieutenant/manifests/crd/bases/${lieutenant:operator:manifest_version}/syn.tools_gitrepos.yaml
       - type: https
-        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_tenants_crd.yaml
-        output_path: dependencies/lieutenant/manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_tenants_crd.yaml
+        source: ${lieutenant:operator:manifest_url}/crd/bases/syn.tools_tenants.yaml
+        output_path: dependencies/lieutenant/manifests/crd/bases/${lieutenant:operator:manifest_version}/syn.tools_tenants.yaml
       - type: https
-        source: ${lieutenant:operator:manifest_url}/crds/syn.tools_tenanttemplates_crd.yaml
-        output_path: dependencies/lieutenant/manifests/crds/${lieutenant:operator:manifest_version}/syn.tools_tenanttemplates_crd.yaml
+        source: ${lieutenant:operator:manifest_url}/crd/bases/syn.tools_tenanttemplates.yaml
+        output_path: dependencies/lieutenant/manifests/crd/bases/${lieutenant:operator:manifest_version}/syn.tools_tenanttemplates.yaml
       # operator
       - type: https
-        source: ${lieutenant:operator:manifest_url}/deployment.yaml
+        source: ${lieutenant:operator:manifest_url}/manager/manager.yaml
         output_path: dependencies/lieutenant/manifests/operator/${lieutenant:operator:manifest_version}/deployment.yaml
       - type: https
-        source: ${lieutenant:operator:manifest_url}/role.yaml
+        source: ${lieutenant:operator:manifest_url}/rbac/role.yaml
         output_path: dependencies/lieutenant/manifests/operator/${lieutenant:operator:manifest_version}/role.yaml
       - type: https
-        source: ${lieutenant:operator:manifest_url}/role_binding.yaml
+        source: ${lieutenant:operator:manifest_url}/rbac/role_binding.yaml
         output_path: dependencies/lieutenant/manifests/operator/${lieutenant:operator:manifest_version}/role_binding.yaml
       - type: https
-        source: ${lieutenant:operator:manifest_url}/service_account.yaml
+        source: ${lieutenant:operator:manifest_url}/rbac/service_account.yaml
         output_path: dependencies/lieutenant/manifests/operator/${lieutenant:operator:manifest_version}/service_account.yaml
       # API
       - type: https
@@ -49,7 +49,7 @@ parameters:
         input_type: jsonnet
         output_path: apps/
       - input_paths:
-          - lieutenant/manifests/crds/${lieutenant:operator:manifest_version}/
+          - lieutenant/manifests/crd/bases/${lieutenant:operator:manifest_version}/
         input_type: copy
         output_path: lieutenant/00_crds/
       - input_paths:

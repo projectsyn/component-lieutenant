@@ -32,21 +32,21 @@ func Test_OperatorDeployment(t *testing.T) {
 
 func Test_OperatorRBAC(t *testing.T) {
 	role := &rbacv1.Role{}
-	data, err := ioutil.ReadFile(testPath + "/10_operator/role.yaml")
+	data, err := ioutil.ReadFile(testPath + "/10_operator/clusterrole.yaml")
 	require.NoError(t, err)
 	err = yaml.UnmarshalStrict(data, role)
 	require.NoError(t, err)
 
-	assert.Equal(t, operator, role.Name)
+	assert.Equal(t, "lieutenant-operator-manager-role", role.Name)
 	assert.Equal(t, namespace, role.Namespace)
 
 	rolebinding := &rbacv1.RoleBinding{}
-	data, err = ioutil.ReadFile(testPath + "/10_operator/rolebinding.yaml")
+	data, err = ioutil.ReadFile(testPath + "/10_operator/clusterrolebinding.yaml")
 	require.NoError(t, err)
 	err = yaml.UnmarshalStrict(data, rolebinding)
 	require.NoError(t, err)
 
-	assert.Equal(t, operator, rolebinding.Name)
+	assert.Equal(t, "lieutenant-operator-manager-rolebinding", rolebinding.Name)
 	assert.Equal(t, namespace, rolebinding.Namespace)
 
 	sa := &corev1.ServiceAccount{}
@@ -55,7 +55,7 @@ func Test_OperatorRBAC(t *testing.T) {
 	err = yaml.UnmarshalStrict(data, sa)
 	require.NoError(t, err)
 
-	assert.Equal(t, operator, sa.Name)
+	assert.Equal(t, "lieutenant-operator", sa.Name)
 	assert.Equal(t, namespace, sa.Namespace)
 
 	assert.Equal(t, role.Name, rolebinding.RoleRef.Name, "RoleBinding is not referencing the Role")

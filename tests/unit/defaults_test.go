@@ -18,12 +18,12 @@ var (
 
 	namespace = "lieutenant"
 
-	operator      = "lieutenant-operator"
-	operatorImage = "docker.io/projectsyn/lieutenant-operator:v0.5.3"
+	operator      = "lieutenant-operator-controller-manager"
+	operatorImage = "quay.io/projectsyn/lieutenant-operator:v1.0.0-rc.8"
 
 	api            = "lieutenant-api"
 	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.6.0"
-	stewardImage   = "docker.io/projectsyn/steward:v0.3.1"
+	stewardImage   = "docker.io/projectsyn/steward:v0.4.0"
 	defaultGithost = "gitlab-com"
 )
 
@@ -75,10 +75,10 @@ func Test_Validate(t *testing.T) {
 
 func Test_CRDs(t *testing.T) {
 	crds := []string{
-		"syn.tools_clusters_crd.yaml",
-		"syn.tools_gitrepos_crd.yaml",
-		"syn.tools_tenants_crd.yaml",
-		"syn.tools_tenanttemplates_crd.yaml",
+		"syn.tools_clusters.yaml",
+		"syn.tools_gitrepos.yaml",
+		"syn.tools_tenants.yaml",
+		"syn.tools_tenanttemplates.yaml",
 	}
 	for _, crd := range crds {
 		_, err := ioutil.ReadFile(fmt.Sprintf("%s/00_crds/%s", testPath, crd))
