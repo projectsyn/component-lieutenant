@@ -4,6 +4,8 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.lieutenant;
 
+local prefix = 'lieutenant-operator-';
+
 local role = std.parseJson(kap.yaml_load('lieutenant/manifests/operator/' + params.operator.manifest_version + '/role.yaml'));
 local service_account = std.parseJson(kap.yaml_load('lieutenant/manifests/operator/' + params.operator.manifest_version + '/service_account.yaml'));
 local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/operator/' + params.operator.manifest_version + '/role_binding.yaml'));
@@ -12,10 +14,24 @@ local deployment = std.parseJson(kap.yaml_load('lieutenant/manifests/operator/' 
 local image = params.images.operator.registry + '/' + params.images.operator.repository + ':' + params.images.operator.version;
 
 local objects = [
-  role,
+  role {
+    metadata+: {
+      name: prefix + super.name,
+    },
+  },
+  role_binding {
+    metadata+: {
+      name: prefix + super.name,
+    },
+    roleRef+: {
+      name: prefix + super.name,
+    },
+  },
   service_account,
-  role_binding,
   deployment {
+    metadata+: {
+      name: prefix + super.name,
+    },
     spec+: {
       selector+: {
         matchLabels+: params.operator.common_labels,
