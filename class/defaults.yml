@@ -5,7 +5,7 @@ parameters:
       operator:
         registry: quay.io
         repository: projectsyn/lieutenant-operator
-        version: v1.0.0
+        version: '1.0.0'
       api:
         registry: docker.io
         repository: projectsyn/lieutenant-api
@@ -15,7 +15,7 @@ parameters:
         repository: projectsyn/steward
         version: v0.4.0
     operator:
-      manifest_version: ${lieutenant:images:operator:version}
+      manifest_version: v${lieutenant:images:operator:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/config
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-operator'
