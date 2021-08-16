@@ -26,6 +26,9 @@ local objects = [
     roleRef+: {
       name: prefix + super.name,
     },
+    subjects: std.map(function(s) s {
+      namespace: params.namespace,
+    }, super.subjects),
   },
   service_account,
   deployment {

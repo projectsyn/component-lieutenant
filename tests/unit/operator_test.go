@@ -48,6 +48,7 @@ func Test_OperatorRBAC(t *testing.T) {
 
 	assert.Equal(t, "lieutenant-operator-manager-rolebinding", rolebinding.Name)
 	assert.Equal(t, namespace, rolebinding.Namespace)
+	assert.Equal(t, namespace, rolebinding.Subjects[0].Namespace)
 
 	sa := &corev1.ServiceAccount{}
 	data, err = ioutil.ReadFile(testPath + "/10_operator/serviceaccount.yaml")
