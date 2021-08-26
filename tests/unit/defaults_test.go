@@ -19,11 +19,11 @@ var (
 	namespace = "lieutenant"
 
 	operator      = "lieutenant-operator-controller-manager"
-	operatorImage = "quay.io/projectsyn/lieutenant-operator:1.0.0"
+	operatorImage = "quay.io/projectsyn/lieutenant-operator:1.1.2"
 
 	api            = "lieutenant-api"
-	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.6.0"
-	stewardImage   = "docker.io/projectsyn/steward:v0.4.0"
+	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.7.0"
+	stewardImage   = "docker.io/projectsyn/steward:v0.5.0"
 	defaultGithost = "gitlab-com"
 )
 
