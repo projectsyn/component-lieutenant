@@ -5,15 +5,15 @@ parameters:
       operator:
         registry: quay.io
         repository: projectsyn/lieutenant-operator
-        version: '1.0.0'
+        version: '1.1.2'
       api:
         registry: docker.io
         repository: projectsyn/lieutenant-api
-        version: v0.6.0
+        version: v0.7.0
       steward:
         registry: docker.io
         repository: projectsyn/steward
-        version: v0.4.0
+        version: v0.5.0
     operator:
       manifest_version: v${lieutenant:images:operator:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/config
