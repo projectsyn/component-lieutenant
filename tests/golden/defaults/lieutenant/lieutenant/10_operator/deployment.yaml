@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: lieutenant-operator
+    app.kubernetes.io/part-of: project-syn
+    control-plane: controller-manager
+  name: lieutenant-operator-controller-manager
+  namespace: lieutenant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: lieutenant-operator
+      app.kubernetes.io/part-of: project-syn
+      control-plane: controller-manager
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: lieutenant-operator
+        app.kubernetes.io/part-of: project-syn
+        control-plane: controller-manager
+    spec:
+      containers:
+        - env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: lieutenant-operator
+            - name: DEFAULT_DELETION_POLICY
+              value: Archive
+            - name: DEFAULT_GLOBAL_GIT_REPO_URL
+              value: https://github.com/projectsyn/getting-started-commodore-defaults
+            - name: LIEUTENANT_DELETE_PROTECTION
+              value: 'false'
+            - name: SKIP_VAULT_SETUP
+              value: 'true'
+          image: quay.io/projectsyn/lieutenant-operator:1.1.2
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          name: lieutenant-operator
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 128Mi
+            requests:
+              cpu: 200m
+              memory: 64Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+      serviceAccountName: lieutenant-operator
