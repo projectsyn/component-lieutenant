@@ -1,0 +1,9 @@
+:global:
+  componentName: lieutenant
+  githubUrl: https://github.com/projectsyn/component-lieutenant
+  feature_goUnitTests: true
+  feature_goldenTests: true
+
+docs/antora.yml:
+  name: lieutenant
+  title: Lieutenant
