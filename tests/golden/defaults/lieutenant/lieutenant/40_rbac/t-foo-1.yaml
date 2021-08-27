@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: t-foo-1
+  namespace: lieutenant
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: t-foo-1
+subjects:
+  - kind: Group
+    name: g-buzz
+  - kind: User
+    name: u-bar-2

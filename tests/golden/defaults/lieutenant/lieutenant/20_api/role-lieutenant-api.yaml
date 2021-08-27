@@ -1,0 +1,28 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/name: lieutenant-api
+    app.kubernetes.io/part-of: project-syn
+  name: lieutenant-api
+  namespace: lieutenant
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - serviceaccounts
+      - secrets
+    verbs:
+      - get
+  - apiGroups:
+      - syn.tools
+    resources:
+      - clusters
+    verbs:
+      - list
+  - apiGroups:
+      - syn.tools
+    resources:
+      - clusters/status
+    verbs:
+      - update
