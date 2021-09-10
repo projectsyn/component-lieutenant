@@ -11,7 +11,9 @@ rules:
       - syn.tools
     resources:
       - clusters
+      - clusters/status
       - tenants
+      - tenants/status
     verbs:
       - create
       - delete

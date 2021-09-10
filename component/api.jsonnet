@@ -57,7 +57,9 @@ local user_role = kube.Role('lieutenant-api-user') {
       ],
       resources: [
         'clusters',
+        'clusters/status',
         'tenants',
+        'tenants/status',
       ],
       verbs: [
         'create',
