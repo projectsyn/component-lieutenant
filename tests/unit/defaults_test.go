@@ -22,7 +22,7 @@ var (
 	operatorImage = "quay.io/projectsyn/lieutenant-operator:1.1.2"
 
 	api            = "lieutenant-api"
-	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.7.0"
+	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.8.0"
 	stewardImage   = "docker.io/projectsyn/steward:v0.5.0"
 	defaultGithost = "gitlab-com"
 )
