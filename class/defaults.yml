@@ -13,7 +13,7 @@ parameters:
       steward:
         registry: docker.io
         repository: projectsyn/steward
-        version: v0.6.0
+        version: v0.7.0
     operator:
       manifest_version: v${lieutenant:images:operator:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/config
