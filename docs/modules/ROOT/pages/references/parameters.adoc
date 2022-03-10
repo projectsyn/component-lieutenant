@@ -229,3 +229,31 @@ githosts:
       git.vshn.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnE1dMkh+3uHWck+cTvQqeNUW0lj1uVcIC9JX2Tg6gmkKCYA73+o+I7vo4g6nPtSOAfITvYdHJLzwE9GwlSFsXHMR9q0ErWl2wC+w6FawLMz9//5XqiBi2qq/8WnWp3ecY16jDoGRW4eymT+USFHKJVi696XBy3WE/0BBapPZ58WPqkKN6A27qkIK6FehI80f+zN4ZqikdwWuCFs35fsimcmLnWqWPm8zbOkgCiB+ov4O/xmRNHwJWCk/qzU6X/M9YtMXzAa5mjwDvcHSAizFD3a3Fv68G1VsmRZ0THLrRKM/WOxrWNZoimSNgyjTzoCwiKeckvL5+hpNcNSW+eBPt
       git.vshn.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
 ----
+
+== `auth_delegation`
+
+[horizontal]
+type:: dict
+default:: {}
+
+A list of subjects that will be allowed to review cluster tokens.
+The component will create a ClusterRoleBinding that assigns the `system:auth-delegator` ClusterRole to the given subjects.
+
+This can be used to enable one or more subjects to authenticate to an externally running vault instance.
+The example below will allow any service account in the `lieutenant` namespace to authenticate to vault.
+
+[source,yaml]
+----
+auth_delegation:
+  lieutenant-sa:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccounts
+    namespace: lieutenant
+----
+
+
+[WARNING]
+====
+Any listed subject will be able to create `SubjectAccessReviews`, which means they will be able to deduce all RBAC rules on the cluster.
+====
