@@ -72,3 +72,7 @@ parameters:
           - lieutenant/component/rbac.jsonnet
         input_type: jsonnet
         output_path: lieutenant/40_rbac/
+      - input_paths:
+          - lieutenant/component/auth_delegation.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/
