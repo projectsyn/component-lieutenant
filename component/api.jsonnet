@@ -8,7 +8,8 @@ local role = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.ap
 local service_account = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/service_account.yaml'));
 local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/role_binding.yaml'));
 local deployment = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/deployment.yaml'));
-local service = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/service.yaml'));
+local raw_service = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/service.yaml'));
+local service = kube.Service(raw_service.metadata.name) {} + raw_service;
 
 local image = params.images.api.registry + '/' + params.images.api.repository + ':' + params.images.api.version;
 local steward_image = params.images.steward.registry + '/' + params.images.steward.repository + ':' + params.images.steward.version;
@@ -25,10 +26,8 @@ local ingress = kube.Ingress('lieutenant-api') {
           paths: [
             {
               path: '/',
-              backend: {
-                serviceName: service.metadata.name,
-                servicePort: 80,
-              },
+              pathType: 'Prefix',
+              backend: service.name_port,
             },
           ],
         },
