@@ -30,12 +30,12 @@ func Test_RBAC(t *testing.T) {
 				Kind: rbacv1.UserKind,
 			},
 		},
-    "t-foo-1": {
+		"t-foo-1": {
 			{
 				Name: "u-bar-2",
 				Kind: rbacv1.UserKind,
 			},
-      {
+			{
 				Name: "g-buzz",
 				Kind: rbacv1.GroupKind,
 			},

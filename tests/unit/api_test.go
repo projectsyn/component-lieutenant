@@ -10,7 +10,7 @@ import (
 
 	appv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
-	netv1b1 "k8s.io/api/networking/v1beta1"
+	netv1 "k8s.io/api/networking/v1"
 	rbacv1 "k8s.io/api/rbac/v1"
 	"sigs.k8s.io/yaml"
 )
@@ -43,7 +43,7 @@ func Test_APIDeployment(t *testing.T) {
 }
 
 func Test_APIIngress(t *testing.T) {
-	ing := &netv1b1.Ingress{}
+	ing := &netv1.Ingress{}
 	data, err := ioutil.ReadFile(testPath + "/20_api/ingress-lieutenant-api.yaml")
 	require.NoError(t, err)
 	err = yaml.UnmarshalStrict(data, ing)
@@ -64,12 +64,11 @@ func Test_APIIngress(t *testing.T) {
 	require.NotEmpty(t, ing.Spec.Rules[0].HTTP.Paths)
 	p := ing.Spec.Rules[0].HTTP.Paths[0]
 	require.Equal(t, "/", p.Path)
-	require.Equal(t, svc.Name, p.Backend.ServiceName)
+	require.Equal(t, svc.Name, p.Backend.Service.Name)
 
-  require.NotEmpty(t, ing.Spec.TLS)
-  require.NotEmpty(t, ing.Spec.TLS[0].Hosts)
+	require.NotEmpty(t, ing.Spec.TLS)
+	require.NotEmpty(t, ing.Spec.TLS[0].Hosts)
 	assert.Equal(t, ing.Spec.Rules[0].Host, ing.Spec.TLS[0].Hosts[0])
-
 
 	deploy := &appv1.Deployment{}
 	data, err = ioutil.ReadFile(testPath + "/20_api/deployment-lieutenant-api.yaml")
