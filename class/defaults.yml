@@ -44,3 +44,4 @@ parameters:
           name: lieutenant-api-user
     tenant_rbac: {}
     githosts: {}
+    auth_delegation: {}
