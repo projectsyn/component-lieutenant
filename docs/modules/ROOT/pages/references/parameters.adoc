@@ -84,7 +84,7 @@ Address to the Vault instance.
 type:: string
 default:: `kubernetes`
 
-The mount path of the authenitcation method to use.
+The mount path of the Vault authentication method to use.
 
 == `operator.vault.path`
 
