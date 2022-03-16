@@ -78,6 +78,13 @@ default:: `vault.todo`
 
 Address to the Vault instance.
 
+== `operator.vault.auth_path`
+
+[horizontal]
+type:: string
+default:: `kubernetes`
+
+The mount path of the Vault authentication method to use.
 
 == `operator.vault.path`
 

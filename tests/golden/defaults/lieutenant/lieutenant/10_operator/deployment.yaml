@@ -41,7 +41,7 @@ spec:
               value: 'false'
             - name: SKIP_VAULT_SETUP
               value: 'true'
-          image: quay.io/projectsyn/lieutenant-operator:1.1.2
+          image: quay.io/projectsyn/lieutenant-operator:1.3.0
           livenessProbe:
             httpGet:
               path: /healthz

@@ -19,7 +19,7 @@ var (
 	namespace = "lieutenant"
 
 	operator      = "lieutenant-operator-controller-manager"
-	operatorImage = "quay.io/projectsyn/lieutenant-operator:1.1.2"
+	operatorImage = "quay.io/projectsyn/lieutenant-operator:1.3.0"
 
 	api            = "lieutenant-api"
 	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.8.0"
