@@ -5,7 +5,7 @@ parameters:
       operator:
         registry: quay.io
         repository: projectsyn/lieutenant-operator
-        version: '1.1.2'
+        version: '1.3.0'
       api:
         registry: docker.io
         repository: projectsyn/lieutenant-api
@@ -26,6 +26,7 @@ parameters:
       vault:
         enabled: true
         addr: vault.todo
+        auth_path: 'kubernetes'
         path: kv
     api:
       lieutenant_instance: ${lieutenant:namespace}

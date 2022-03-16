@@ -73,6 +73,10 @@ local objects = [
                         value: params.operator.vault.addr,
                       },
                       {
+                        name: 'VAULT_AUTH_PATH',
+                        value: params.operator.vault.auth_path,
+                      }
+                      {
                         name: 'VAULT_SECRET_ENGINE_PATH',
                         value: params.operator.vault.path,
                       },
