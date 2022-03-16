@@ -40,7 +40,13 @@ spec:
             - name: LIEUTENANT_DELETE_PROTECTION
               value: 'false'
             - name: SKIP_VAULT_SETUP
-              value: 'true'
+              value: 'false'
+            - name: VAULT_ADDR
+              value: vault.todo
+            - name: VAULT_AUTH_PATH
+              value: foo
+            - name: VAULT_SECRET_ENGINE_PATH
+              value: kv
           image: quay.io/projectsyn/lieutenant-operator:1.3.0
           livenessProbe:
             httpGet:

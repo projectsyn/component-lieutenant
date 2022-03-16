@@ -2,7 +2,8 @@ parameters:
   lieutenant:
     operator:
       vault:
-        enabled: false
+        enabled: true
+        auth_path: foo
     api:
       default_githost: gitlab-com
     tenant_rbac:

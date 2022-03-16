@@ -27,7 +27,7 @@ func Test_OperatorDeployment(t *testing.T) {
 	assert.Len(t, deploy.Spec.Template.Spec.Containers, 1)
 	c := deploy.Spec.Template.Spec.Containers[0]
 	assert.Equal(t, operatorImage, c.Image)
-	assert.Len(t, c.Env, 7)
+	assert.Len(t, c.Env, 10)
 }
 
 func Test_OperatorRBAC(t *testing.T) {
