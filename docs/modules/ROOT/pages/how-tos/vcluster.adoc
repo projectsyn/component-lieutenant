@@ -1,0 +1,125 @@
+= Lieutenant in vcluster
+
+Vcluster is a virtual Kubernetes Clusters that run inside regular namespaces.
+Installing Lieutenant in a vcluster can be helpful as it allows you to run multiple versions of Lieutenant, with different CRD versions on the same cluster.
+
+The following steps need to be performed to deploy Lieutenant in a vcluster.
+
+== Deploy vcluster and enable Syn
+
+First we need a vcluster instance we can deploy Lieutenant to.
+Follow the setup guide in the https://hub.syn.tools/vcluster/index.html[component-vcluster documentation] and be sure to enable Syn on the newly created virtual cluster.
+
+After that you should be able to deploy to a vcluster and the vcluster component configuration should look similar to the following:
+
+[code,yaml]
+----
+applications:
+  - vcluster as lieutenant-prod
+parameters:
+  lieutenant_prod:
+    host_service_cidr: 172.30.0.0/16
+    namespace: lieutenant-prod
+    ocp_route:
+      host: lieutenant-prod.apps.cluster.example.com
+    syn:
+      registration_url: https://api.syn.example.com/install/steward.json?token=XRaRSHafWa28afE72F2aCY==
+----
+
+== Attach external Vault
+
+Classical deployments of Lieutenant assume that Vault is running on the same cluster.
+When deploying Lieutenant in a vcluster this is not ideal.
+We will want to configure a connection to an externally running Vault.
+
+For that we need to do two things
+
+. Setup Vault to authenticate users against an external Kubernetes Cluster.
+To do that follow the Vault guide on connecting to an external Lieutenant instance.
+
+. Configure connection to Vault and enable authentication delegation for service accounts
++
+[code,yaml]
+----
+parameters:
+  lieutenant:
+    api:
+      ingress:
+        host: api-prod.syn.example.com
+    operator:
+      vault:
+        addr: https://vault.example.com
+        auth_path: lieutenant <1>
+        path: clusters/kv
+    auth_delegation:
+      lieutenant-sa: <2>
+        apiGroup: rbac.authorization.k8s.io
+        kind: Group
+        name: system:serviceaccounts
+        namespace: lieutenant
+----
+<1> The mount path for the configured external Kubernetes Vault authentication method
+<2> This is needed so that Lieutenant service accounts, such as the ones for the managed clusters, can access Vault
+
+== Setup connection to GitLab
+
+The Lieutenant Operator needs to be able to connect to the GitLab API to create repositories for tenants and clusters.
+Follow the xref:how-tos/setup-githost.adoc[Connecting to GitLab] guide. 
+Afterwards the component configuration should look similar to the following:
+
+[code,yaml]
+----
+parameters:
+  lieutenant:
+    api:
+      ingress:
+        host: api-prod.syn.example.com
+    operator:
+      vault:
+        addr: https://vault.example.com
+        auth_path: lieutenant
+        path: clusters/kv
+    auth_delegation:
+      lieutenant-sa:
+        apiGroup: rbac.authorization.k8s.io
+        kind: Group
+        name: system:serviceaccounts
+        namespace: lieutenant
+    githosts:
+      your-gitlab:
+        endpoint: https://git.yourdomain.net/
+        token: '?{vaultkv:${cluster:tenant}/${cluster:name}/lieutenant/githosts/your-gitlab/token}'
+        host_keys: |
+          git.yourdomain.net ssh-rsa AAAAB3Nz...
+          git.yourdomain.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO9EkPcVdsz/oVTI2VJkBlq8Mv/dg3rhcbgzAEKyiwUG
+----
+
+== (Optional) Enable OIDC
+
+As a last step we can connect the created vcluster to an OIDC provider.
+This not only allow us to authenticate to vcluster using OIDC, but also enables doing so for the Lieutenant API.
+This means after enabling this, we can authenticate ourselves to Lieutenant using `commodore login`.
+
+See the guide on how to configure OIDC for vcluster.
+After that the vcluster component configuration should look similarly to the following:
+
+[code,yaml]
+----
+applications:
+  - vcluster as lieutenant-prod
+parameters:
+  lieutenant_prod:
+    host_service_cidr: 172.30.0.0/16
+    namespace: lieutenant-prod
+    ocp_route:
+      host: lieutenant-prod.apps.cluster.example.com
+    k3s:
+      additional_args:
+        - --kube-apiserver-arg=oidc-issuer-url=https://id.example.com/auth/realms/main
+        - --kube-apiserver-arg=oidc-client-id=lieutenant
+        - --kube-apiserver-arg=oidc-username-claim=preferred_username
+        - --kube-apiserver-arg=oidc-username-prefix=syn#
+        - --kube-apiserver-arg=oidc-groups-claim=groups
+    syn:
+      registration_url: https://api.syn.example.com/install/steward.json?token=XRaRSHafWa28afE72F2aCY==
+----
