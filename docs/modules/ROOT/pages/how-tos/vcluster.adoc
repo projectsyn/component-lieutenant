@@ -29,13 +29,13 @@ parameters:
 == Attach external Vault
 
 Classical deployments of Lieutenant assume that Vault is running on the same cluster.
-When deploying Lieutenant in a vcluster this is not ideal.
+When deploying Lieutenant in a vcluster this isn't ideal.
 We will want to configure a connection to an externally running Vault.
 
 For that we need to do two things
 
-. Setup Vault to authenticate users against an external Kubernetes Cluster.
-To do that follow the Vault guide on connecting to an external Lieutenant instance.
+. Setup Vault to authenticate users against an external Kubernetes cluster.
+To do that follow the Vault guide on https://hub.syn.tools/vault/how-tos/lieutenant.html#_external_vault[connecting to an external Lieutenant instance].
 
 . Configure connection to Vault and enable authentication delegation for service accounts
 +
@@ -64,7 +64,7 @@ parameters:
 == Setup connection to GitLab
 
 The Lieutenant Operator needs to be able to connect to the GitLab API to create repositories for tenants and clusters.
-Follow the xref:how-tos/setup-githost.adoc[Connecting to GitLab] guide. 
+Follow the xref:how-tos/setup-githost.adoc[Connecting to GitLab] guide.
 Afterwards the component configuration should look similar to the following:
 
 [code,yaml]
@@ -100,7 +100,7 @@ As a last step we can connect the created vcluster to an OIDC provider.
 This not only allow us to authenticate to vcluster using OIDC, but also enables doing so for the Lieutenant API.
 This means after enabling this, we can authenticate ourselves to Lieutenant using `commodore login`.
 
-See the guide on how to configure OIDC for vcluster.
+See the guide on how to https://hub.syn.tools/vcluster/how-tos/oidc.html[configure OIDC for vcluster].
 After that the vcluster component configuration should look similarly to the following:
 
 [code,yaml]
