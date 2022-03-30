@@ -129,26 +129,14 @@ local objects = [
             if c.name == 'lieutenant-api' then
               c {
                 image: image,
-                env: mergeEnvVars([
-                  if e.name == 'STEWARD_IMAGE' then
-                    {
-                      name: 'STEWARD_IMAGE',
-                      value: steward_image,
-                    }
-                  else if e.name == 'LIEUTENANT_INSTANCE' then
-                    {
-                      name: 'LIEUTENANT_INSTANCE',
-                      value: params.api.lieutenant_instance,
-                    }
-                  else
-                    e
-                  for e in super.env + [
-                    {
-                      name: 'DEFAULT_API_SECRET_REF_NAME',
-                      value: params.api.default_githost,
-                    },
-                  ]
-                ], com.envList(params.api.env)),
+                env: mergeEnvVars(
+                  super.env,
+                  com.envList({
+                    STEWARD_IMAGE: steward_image,
+                    LIEUTENANT_INSTANCE: params.api.lieutenant_instance,
+                    DEFAULT_API_SECRET_REF_NAME: params.api.default_githost,
+                  } + params.api.env)
+                ),
               }
             else
               c
