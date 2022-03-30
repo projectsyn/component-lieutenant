@@ -1,7 +1,7 @@
 = Lieutenant in vcluster
 
-Vcluster is a virtual Kubernetes Clusters that run inside regular namespaces.
-Installing Lieutenant in a vcluster can be helpful as it allows you to run multiple versions of Lieutenant, with different CRD versions on the same cluster.
+Vcluster is a virtual Kubernetes Cluster that runs in a single namespace on a host Kubernetes cluster.
+Installing Lieutenant in a vcluster can be useful as it allows you to run multiple versions of Lieutenant, with different CRD versions on the same host cluster.
 
 The following steps need to be performed to deploy Lieutenant in a vcluster.
 
@@ -97,8 +97,8 @@ parameters:
 == (Optional) Enable OIDC
 
 As a last step we can connect the created vcluster to an OIDC provider.
-This not only allow us to authenticate to vcluster using OIDC, but also enables doing so for the Lieutenant API.
-This means after enabling this, we can authenticate ourselves to Lieutenant using `commodore login`.
+This not only allows us to authenticate to the vcluster Kubernetes API using OIDC, but also enables doing so for the Lieutenant API.
+After enabling this, we can authenticate ourselves to Lieutenant using `commodore login` (requires Commodore >= 0.15.0).
 
 See the guide on how to https://hub.syn.tools/vcluster/how-tos/oidc.html[configure OIDC for vcluster].
 After that the vcluster component configuration should look similarly to the following:
