@@ -20,8 +20,8 @@ parameters:
   lieutenant_prod:
     host_service_cidr: 172.30.0.0/16
     namespace: lieutenant-prod
-    ocp_route:
-      host: lieutenant-prod.apps.cluster.example.com
+    ingress:
+      host: lieutenant-prod.cluster.example.com
     syn:
       registration_url: https://api.syn.example.com/install/steward.json?token=XRaRSHafWa28afE72F2aCY==
 ----
@@ -111,8 +111,8 @@ parameters:
   lieutenant_prod:
     host_service_cidr: 172.30.0.0/16
     namespace: lieutenant-prod
-    ocp_route:
-      host: lieutenant-prod.apps.cluster.example.com
+    ingress:
+      host: lieutenant-prod.cluster.example.com
     k3s:
       additional_args:
         - --kube-apiserver-arg=oidc-issuer-url=https://id.example.com/auth/realms/main
