@@ -32,7 +32,7 @@ spec:
               value: docker.io/projectsyn/steward:v0.6.0
             - name: DEFAULT_API_SECRET_REF_NAME
               value: gitlab-com
-          image: docker.io/projectsyn/lieutenant-api:v0.8.0
+          image: docker.io/projectsyn/lieutenant-api:v0.9.0
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
