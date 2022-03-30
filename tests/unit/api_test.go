@@ -29,7 +29,7 @@ func Test_APIDeployment(t *testing.T) {
 	assert.Len(t, deploy.Spec.Template.Spec.Containers, 1)
 	c := deploy.Spec.Template.Spec.Containers[0]
 	assert.Equal(t, apiImage, c.Image)
-	assert.Len(t, c.Env, 4)
+	assert.Len(t, c.Env, 6)
 
 	for _, env := range c.Env {
 		switch env.Name {

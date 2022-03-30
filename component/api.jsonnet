@@ -1,3 +1,4 @@
+local com = import 'lib/commodore.libjsonnet';
 local kap = import 'lib/kapitan.libjsonnet';
 local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
@@ -95,6 +96,14 @@ local user_service_accounts = [
   if u.kind == 'ServiceAccount'
 ];
 
+local mergeEnvVars(envs, additional) =
+  local foldFn =
+    function(acc, env)
+      acc { [env.name]: env };
+  local base = std.foldl(foldFn, envs, {});
+  local final = std.foldl(foldFn, additional, base);
+  [ final[k] for k in std.objectFields(final) ];
+
 local objects = [
   role,
   service_account,
@@ -120,7 +129,7 @@ local objects = [
             if c.name == 'lieutenant-api' then
               c {
                 image: image,
-                env: [
+                env: mergeEnvVars([
                   if e.name == 'STEWARD_IMAGE' then
                     {
                       name: 'STEWARD_IMAGE',
@@ -139,7 +148,7 @@ local objects = [
                       value: params.api.default_githost,
                     },
                   ]
-                ],
+                ], com.envList(params.api.env)),
               }
             else
               c
