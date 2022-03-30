@@ -120,6 +120,27 @@ default:: ``
 The githost to be used by default for new tenants.
 
 
+== `api.env`
+
+[horizontal]
+type:: list
+default:: `{}`
+example::
++
+[source,yaml]
+----
+env:
+  OIDC_DISCOVERY_URL:
+    secretKeyRef:
+      name: oidc-config
+      key: discovery
+  OIDC_CLIENT_ID: lieutenant
+----
+
+Additional environment that should be passed to the Lieutenant API.
+If a dict is given `valueFrom:` is assumed.
+
+
 == `api.ingress.host`
 
 [horizontal]

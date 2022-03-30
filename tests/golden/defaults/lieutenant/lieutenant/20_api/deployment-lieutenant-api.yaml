@@ -22,16 +22,20 @@ spec:
         - command:
             - lieutenant-api
           env:
+            - name: DEFAULT_API_SECRET_REF_NAME
+              value: gitlab-com
+            - name: LIEUTENANT_INSTANCE
+              value: lieutenant
             - name: NAMESPACE
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-            - name: LIEUTENANT_INSTANCE
+            - name: OIDC_CLIENT_ID
               value: lieutenant
+            - name: OIDC_DISCOVERY_URL
+              value: https://idp.test.com/
             - name: STEWARD_IMAGE
               value: docker.io/projectsyn/steward:v0.6.0
-            - name: DEFAULT_API_SECRET_REF_NAME
-              value: gitlab-com
           image: docker.io/projectsyn/lieutenant-api:v0.9.0
           imagePullPolicy: Always
           livenessProbe:

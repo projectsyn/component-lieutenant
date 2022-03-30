@@ -6,6 +6,9 @@ parameters:
         auth_path: foo
     api:
       default_githost: gitlab-com
+      env:
+        OIDC_DISCOVERY_URL: 'https://idp.test.com/'
+        OIDC_CLIENT_ID: lieutenant
     tenant_rbac:
       t-foo-124:
         - name: "u-bar-1"

@@ -43,6 +43,7 @@ parameters:
       users:
         - kind: ServiceAccount
           name: lieutenant-api-user
+      env: {}
     tenant_rbac: {}
     githosts: {}
     auth_delegation: {}
