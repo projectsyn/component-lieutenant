@@ -37,3 +37,8 @@ parameters:
         kind: Group
         name: system:serviceaccounts
         namespace: lieutenant
+
+    tenant_template:
+      gitRepoTemplate:
+        apiSecretRef:
+          name: git-secret

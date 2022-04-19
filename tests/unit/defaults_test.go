@@ -33,6 +33,7 @@ func skipValidation(path string) bool {
 	ignore := []string{
 		fmt.Sprintf("%s/00_crds", testPath),
 		fmt.Sprintf("%s/20_api/ingress-lieutenant-api.yaml", testPath),
+		fmt.Sprintf("%s/60_tenant_template.yaml", testPath),
 	}
 	for _, iv := range ignore {
 		if iv == path {

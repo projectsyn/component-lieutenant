@@ -1,0 +1,13 @@
+apiVersion: syn.tools/v1alpha1
+kind: TenantTemplate
+metadata:
+  annotations: {}
+  labels:
+    app.kubernetes.io/name: lieutenant-operator
+    app.kubernetes.io/part-of: project-syn
+    name: default
+  name: default
+spec:
+  gitRepoTemplate:
+    apiSecretRef:
+      name: git-secret

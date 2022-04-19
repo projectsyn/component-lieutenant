@@ -52,3 +52,5 @@ parameters:
     githosts: {}
 
     auth_delegation: {}
+
+    tenant_template: null
