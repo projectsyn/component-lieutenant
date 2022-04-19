@@ -76,3 +76,7 @@ parameters:
           - lieutenant/component/auth_delegation.jsonnet
         input_type: jsonnet
         output_path: lieutenant/
+      - input_paths:
+          - lieutenant/component/tenanttemplate.jsonnet
+        input_type: jsonnet
+        output_path: lieutenant/

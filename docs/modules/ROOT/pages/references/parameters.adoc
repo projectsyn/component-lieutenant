@@ -285,3 +285,15 @@ auth_delegation:
 ====
 Any listed subject will be able to create `SubjectAccessReviews`, which means they will be able to deduce all RBAC rules on the cluster.
 ====
+
+== `tenant_template`
+
+[horizontal]
+type:: dict
+default:: null
+
+This parameter allows users to deploy a `TenantTemplate` object called `default`.
+If the parameter is `null`, the `TenantTemplate` object won't be created.
+The contents of the parameter are used for field `spec` of the object without any processing or validation.
+
+See https://github.com/projectsyn/lieutenant-operator/blob/f3882ea62de99fba23eeff2119283a9bb5060319/api/v1alpha1/tenant_types.go#L11-L35[`TenantSpec`] for supported fields.
