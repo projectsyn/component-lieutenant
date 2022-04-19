@@ -23,7 +23,7 @@ var (
 
 	api            = "lieutenant-api"
 	apiImage       = "docker.io/projectsyn/lieutenant-api:v0.9.0"
-	stewardImage   = "docker.io/projectsyn/steward:v0.6.0"
+	stewardImage   = "docker.io/projectsyn/steward:v0.7.0"
 	defaultGithost = "gitlab-com"
 )
 
