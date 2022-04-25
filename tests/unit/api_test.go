@@ -28,13 +28,10 @@ func Test_APIDeployment(t *testing.T) {
 	require.NotEmpty(t, deploy.Spec.Template.Spec.Containers)
 	assert.Len(t, deploy.Spec.Template.Spec.Containers, 1)
 	c := deploy.Spec.Template.Spec.Containers[0]
-	assert.Equal(t, apiImage, c.Image)
 	assert.Len(t, c.Env, 6)
 
 	for _, env := range c.Env {
 		switch env.Name {
-		case "STEWARD_IMAGE":
-			assert.Equal(t, stewardImage, env.Value)
 		case "DEFAULT_API_SECRET_REF_NAME":
 			assert.Equal(t, defaultGithost, env.Value)
 		}
