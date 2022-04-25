@@ -26,7 +26,6 @@ func Test_OperatorDeployment(t *testing.T) {
 	require.NotEmpty(t, deploy.Spec.Template.Spec.Containers)
 	assert.Len(t, deploy.Spec.Template.Spec.Containers, 1)
 	c := deploy.Spec.Template.Spec.Containers[0]
-	assert.Equal(t, operatorImage, c.Image)
 	assert.Len(t, c.Env, 10)
 }
 
