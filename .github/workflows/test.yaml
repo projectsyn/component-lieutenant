@@ -5,7 +5,7 @@ on:
       - master
 
 env:
-  COMPONENT_NAME: lieutenant
+  COMPONENT_NAME: Lieutenant
 
 jobs:
   linting:
