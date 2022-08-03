@@ -9,6 +9,19 @@ metadata:
   namespace: lieutenant
 rules:
   - apiGroups:
+      - ''
+    resources:
+      - secrets
+      - serviceaccounts
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
       - coordination.k8s.io
     resources:
       - leases
