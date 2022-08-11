@@ -59,6 +59,24 @@ default:: ``
 URL of the default global configuration Git repository.
 The value of this parameter will be used as the default value for `.spec.globalGitRepoURL` on new tenant objects.
 
+== `operator.env`
+
+[horizontal]
+type:: dict
+default:: `{}`
+example::
++
+[source,yaml]
+----
+env:
+  LIEUTENANT_CREATE_SERVICEACCOUNT_TOKEN_SECRET: true
+----
+
+Additional environment variables that should be passed to the Lieutenant operator.
+If a dict is given as the value, the component will render it as `valueFrom:`.
+
+TIP: Environment variables configured in this parameter have precedence over environment variables generated from other component parameters.
+
 == `operator.vault.enabled`
 
 [horizontal]

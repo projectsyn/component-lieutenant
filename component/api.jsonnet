@@ -5,6 +5,8 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.lieutenant;
 
+local common = import 'common.libsonnet';
+
 local role = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/role.yaml'));
 local service_account = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/service_account.yaml'));
 local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/api/' + params.api.manifest_version + '/role_binding.yaml'));
@@ -96,14 +98,6 @@ local user_service_accounts = [
   if u.kind == 'ServiceAccount'
 ];
 
-local mergeEnvVars(envs, additional) =
-  local foldFn =
-    function(acc, env)
-      acc { [env.name]: env };
-  local base = std.foldl(foldFn, envs, {});
-  local final = std.foldl(foldFn, additional, base);
-  [ final[k] for k in std.objectFields(final) ];
-
 local objects = [
   role,
   service_account,
@@ -129,7 +123,7 @@ local objects = [
             if c.name == 'lieutenant-api' then
               c {
                 image: image,
-                env: mergeEnvVars(
+                env: common.MergeEnvVars(
                   super.env,
                   com.envList({
                     STEWARD_IMAGE: steward_image,
