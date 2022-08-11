@@ -24,6 +24,7 @@ parameters:
       default_deletion_policy: Archive
       deletion_protection: false
       default_global_git_repo: https://github.com/projectsyn/getting-started-commodore-defaults
+      env: {}
       vault:
         enabled: true
         addr: vault.todo

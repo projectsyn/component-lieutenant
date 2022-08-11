@@ -1,8 +1,11 @@
+local com = import 'lib/commodore.libjsonnet';
 local kap = import 'lib/kapitan.libjsonnet';
 local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.lieutenant;
+
+local common = import 'common.libsonnet';
 
 local prefix = 'lieutenant-operator-';
 
@@ -12,6 +15,23 @@ local role_binding = std.parseJson(kap.yaml_load('lieutenant/manifests/operator/
 local deployment = std.parseJson(kap.yaml_load('lieutenant/manifests/operator/' + params.operator.manifest_version + '/deployment.yaml'));
 
 local image = params.images.operator.registry + '/' + params.images.operator.repository + ':' + params.images.operator.version;
+
+
+local default_env =
+  {
+    DEFAULT_DELETION_POLICY: params.operator.default_deletion_policy,
+    DEFAULT_GLOBAL_GIT_REPO_URL: params.operator.default_global_git_repo,
+    LIEUTENANT_DELETE_PROTECTION: params.operator.deletion_protection,
+    SKIP_VAULT_SETUP: !params.operator.vault.enabled,
+  } +
+  if params.operator.vault.enabled then
+    {
+      VAULT_ADDR: params.operator.vault.addr,
+      VAULT_AUTH_PATH: params.operator.vault.auth_path,
+      VAULT_SECRET_ENGINE_PATH: params.operator.vault.path,
+    }
+  else
+    {};
 
 local objects = [
   role {
@@ -48,40 +68,9 @@ local objects = [
             if c.name == 'lieutenant-operator' then
               c {
                 image: image,
-                env+: [
-                  {
-                    name: 'DEFAULT_DELETION_POLICY',
-                    value: params.operator.default_deletion_policy,
-                  },
-                  {
-                    name: 'DEFAULT_GLOBAL_GIT_REPO_URL',
-                    value: params.operator.default_global_git_repo,
-                  },
-                  {
-                    name: 'LIEUTENANT_DELETE_PROTECTION',
-                    value: std.toString(params.operator.deletion_protection),
-                  },
-                  {
-                    name: 'SKIP_VAULT_SETUP',
-                    value: std.toString(!params.operator.vault.enabled),
-                  },
-                ] + (
-                  if params.operator.vault.enabled then
-                    [
-                      {
-                        name: 'VAULT_ADDR',
-                        value: params.operator.vault.addr,
-                      },
-                      {
-                        name: 'VAULT_AUTH_PATH',
-                        value: params.operator.vault.auth_path,
-                      },
-                      {
-                        name: 'VAULT_SECRET_ENGINE_PATH',
-                        value: params.operator.vault.path,
-                      },
-                    ]
-                  else []
+                env: common.MergeEnvVars(
+                  super.env,
+                  com.envList(default_env + params.operator.env)
                 ),
               }
             else
