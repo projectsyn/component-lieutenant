@@ -98,6 +98,25 @@ local user_service_accounts = [
   if u.kind == 'ServiceAccount'
 ];
 
+local user_sa_secrets =
+  if params.api.create_user_serviceaccount_secrets then
+    [
+      kube.Secret(u.name) {
+        metadata: {
+          name: u.name,
+          annotations: {
+            'kubernetes.io/service-account.name': u.name,
+          },
+        },
+        type: 'kubernetes.io/service-account-token',
+      }
+      for u in params.api.users
+      if u.kind == 'ServiceAccount'
+    ]
+  else
+    [];
+
+
 local objects = [
   role,
   service_account,
@@ -141,7 +160,7 @@ local objects = [
     },
   },
   ingress,
-] + user_service_accounts;
+] + user_service_accounts + user_sa_secrets;
 
 
 {

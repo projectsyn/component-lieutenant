@@ -43,6 +43,7 @@ parameters:
         host: lieutenant.todo
         annotations: {}
         tls: true
+      create_user_serviceaccount_secrets: true
       users:
         - kind: ServiceAccount
           name: lieutenant-api-user

@@ -207,6 +207,16 @@ default:: `${lieutenant:namespace}`
 
 Sets the env variable `LIEUTENANT_INSTANCE` to the value specified here. By default the value is set to the name of the namespace.
 
+== `api.create_user_serviceaccount_secrets`
+
+[horizontal]
+type:: bool
+default:: `true`
+
+This parameter controls whether the component creates a ServiceAccount token secret for each user with `kind: ServiceAccount` listed in parameter `api.users`.
+
+This parameter should always be set to `true` on Kubernetes 1.24+, because Kubernetes 1.24 and newer don't automatically create a ServiceAccount token secret anymore.
+
 == `api.users`
 
 [horizontal]
