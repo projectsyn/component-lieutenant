@@ -108,7 +108,7 @@ local user_sa_secrets =
             'kubernetes.io/service-account.name': u.name,
           },
         },
-        type: 'kubernets.io/service-account-token',
+        type: 'kubernetes.io/service-account-token',
       }
       for u in params.api.users
       if u.kind == 'ServiceAccount'
