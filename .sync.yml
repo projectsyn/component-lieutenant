@@ -1,5 +1,0 @@
-:global:
-  componentName: Lieutenant
-  githubUrl: https://github.com/projectsyn/component-lieutenant
-  feature_goUnitTests: true
-  feature_goldenTests: true
