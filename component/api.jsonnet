@@ -109,6 +109,8 @@ local user_sa_secrets =
           },
         },
         type: 'kubernetes.io/service-account-token',
+        // hide data, so ArgoCD doesn't try to keep it empty
+        data:: {},
       }
       for u in params.api.users
       if u.kind == 'ServiceAccount'
