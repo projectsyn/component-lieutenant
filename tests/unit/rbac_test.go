@@ -49,7 +49,9 @@ func Test_RBAC(t *testing.T) {
 		err = yaml.UnmarshalStrict(data, rb)
 		require.NoError(t, err)
 
-		assert.Equal(t, ten, rb.Name)
+		rbName := fmt.Sprintf("custom-%s", ten)
+
+		assert.Equal(t, rbName, rb.Name)
 		assert.Equal(t, namespace, rb.Namespace)
 		assert.ElementsMatch(t, sub, rb.Subjects)
 	}
