@@ -241,9 +241,12 @@ For entries with type `ServiceAccount` the component will create the correspondi
 type:: dict
 default:: {}
 
-Role based access control to the created tenant resources.
-Lieutenant creates a `Role` for each tenant.
+Role based access control to the created tenant (or cluster) resources.
+Lieutenant creates a `Role` for each tenant and cluster using the tenant or cluster ID as the role name.
 
+The component will create a RoleBinding named `custom-<key>` for each entry in the parameter.
+The `roleRef` for each RoleBinding will use the key in the parameter as the role name.
+We prefix the RoleBinding name with `custom-`, because Lieutenant already manages RoleBindings which use the tenant and cluster IDs as names.
 
 [source,yaml]
 ----
@@ -258,10 +261,16 @@ tenant_rbac:
       kind: 'Group'
     - name: 'u-bar-1'
       kind: 'User'
+  c-bar-546:
+    - name: 'u-bar-1'
+      kind: 'User'
 ----
 
-The example configuration above will grant user `u-bar-1` and service account `sa-bar` read access to all Clusters owned by Tenant `t-foo-324`.
-And it will grant group `g-buzz` and user `u-bar-1` read access to all Clusters owned by Tenant `t-foo-1`.
+The example configuration above will create
+
+* a RoleBinding `custom-t-foo-324` which grants user `u-bar-1` and service account `sa-bar` read access to all clusters owned by tenant `t-foo-324`.
+* a RoleBinding `custom-t-foo-1` which grants group `g-buzz` and user `u-bar-1` read access to all clusters owned by tenant `t-foo-1`.
+* a RoleBinding `custom-c-bar-546` which grants user `u-bar-1` read access to cluster `c-bar-546`.
 
 This can usually only be configured after the initial setup of Lieutenant.
 
