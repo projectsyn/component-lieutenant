@@ -13,7 +13,7 @@ parameters:
       steward:
         registry: docker.io
         repository: projectsyn/steward
-        version: v0.10.1
+        version: v0.11.0
 
     operator:
       manifest_version: v${lieutenant:images:operator:version}
