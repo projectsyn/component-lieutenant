@@ -18,5 +18,14 @@
   "labels": [
     "dependency"
   ],
-  "separateMinorPatch": true
+  "separateMinorPatch": true,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch"],
+      "matchCurrentVersion": ">=1.0.0",
+      "automerge": true,
+      "platformAutomerge": false,
+      "labels": ["automerge"]
+    }
+  ]
 }
