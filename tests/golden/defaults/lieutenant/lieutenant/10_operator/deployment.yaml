@@ -22,11 +22,16 @@ spec:
         control-plane: controller-manager
     spec:
       containers:
-        - env:
+        - args:
+            - -lieutenant-api-url
+            - $(LIEUTENANT_API_URL)
+          env:
             - name: DEFAULT_DELETION_POLICY
               value: Archive
             - name: DEFAULT_GLOBAL_GIT_REPO_URL
               value: https://github.com/projectsyn/getting-started-commodore-defaults
+            - name: LIEUTENANT_API_URL
+              value: https://lieutenant.todo
             - name: LIEUTENANT_DELETE_PROTECTION
               value: 'false'
             - name: OPERATOR_NAME

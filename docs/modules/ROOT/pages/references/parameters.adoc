@@ -77,6 +77,15 @@ If a dict is given as the value, the component will render it as `valueFrom:`.
 
 TIP: Environment variables configured in this parameter have precedence over environment variables generated from other component parameters.
 
+== `operator.lieutenant_api_url`
+
+[horizontal]
+type:: string
+default:: `https://${lieutenant:api:ingress:host}`
+
+Make the Lieutenant Operator aware of where the API is publicly reachable.
+By default, the API ingress hostname is used, with a `https://` prefix.
+
 == `operator.vault.enabled`
 
 [horizontal]

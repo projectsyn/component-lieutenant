@@ -23,6 +23,7 @@ local default_env =
     DEFAULT_GLOBAL_GIT_REPO_URL: params.operator.default_global_git_repo,
     LIEUTENANT_DELETE_PROTECTION: params.operator.deletion_protection,
     SKIP_VAULT_SETUP: !params.operator.vault.enabled,
+    LIEUTENANT_API_URL: params.operator.lieutenant_api_url,
   } +
   if params.operator.vault.enabled then
     {
@@ -68,6 +69,10 @@ local objects = [
             if c.name == 'lieutenant-operator' then
               c {
                 image: image,
+                args: [
+                  '-lieutenant-api-url',
+                  '$(LIEUTENANT_API_URL)',
+                ],
                 env: common.MergeEnvVars(
                   super.env,
                   com.envList(default_env + params.operator.env)

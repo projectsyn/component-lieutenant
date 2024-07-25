@@ -18,6 +18,7 @@ parameters:
     operator:
       manifest_version: v${lieutenant:images:operator:version}
       manifest_url: https://raw.githubusercontent.com/projectsyn/lieutenant-operator/${lieutenant:operator:manifest_version}/config
+      lieutenant_api_url: https://${lieutenant:api:ingress:host}
       common_labels:
         'app.kubernetes.io/name': 'lieutenant-operator'
         'app.kubernetes.io/part-of': 'project-syn'
