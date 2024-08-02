@@ -9,7 +9,7 @@ parameters:
       api:
         registry: docker.io
         repository: projectsyn/lieutenant-api
-        version: v0.12.1
+        version: v0.12.2
       steward:
         registry: docker.io
         repository: projectsyn/steward
