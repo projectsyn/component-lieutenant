@@ -47,7 +47,7 @@ parameters:
       - input_paths:
           - lieutenant/component/app.jsonnet
         input_type: jsonnet
-        output_path: apps/
+        output_path: .
       - input_paths:
           - lieutenant/manifests/crd/bases/${lieutenant:operator:manifest_version}/
         input_type: copy
