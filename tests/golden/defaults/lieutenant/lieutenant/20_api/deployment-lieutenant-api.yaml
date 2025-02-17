@@ -35,7 +35,7 @@ spec:
             - name: OIDC_DISCOVERY_URL
               value: https://idp.test.com/
             - name: STEWARD_IMAGE
-              value: docker.io/projectsyn/steward:v0.12.1
+              value: docker.io/projectsyn/steward:v0.12.2
           image: docker.io/projectsyn/lieutenant-api:v0.12.2
           imagePullPolicy: Always
           livenessProbe:
