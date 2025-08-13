@@ -10,6 +10,7 @@ rules:
   - apiGroups:
       - ''
     resources:
+      - configmaps
       - secrets
       - serviceaccounts
     verbs:
@@ -30,20 +31,6 @@ rules:
       - list
       - update
   - apiGroups:
-      - ''
-    resources:
-      - configmaps
-      - secrets
-      - serviceaccounts
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  - apiGroups:
       - rbac.authorization.k8s.io
     resources:
       - rolebindings
@@ -60,57 +47,7 @@ rules:
       - syn.tools
     resources:
       - clusters
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  - apiGroups:
-      - syn.tools
-    resources:
-      - clusters/finalizers
-    verbs:
-      - update
-  - apiGroups:
-      - syn.tools
-    resources:
-      - clusters/status
-    verbs:
-      - get
-      - patch
-      - update
-  - apiGroups:
-      - syn.tools
-    resources:
       - gitrepos
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  - apiGroups:
-      - syn.tools
-    resources:
-      - gitrepos/finalizers
-    verbs:
-      - update
-  - apiGroups:
-      - syn.tools
-    resources:
-      - gitrepos/status
-    verbs:
-      - get
-      - patch
-      - update
-  - apiGroups:
-      - syn.tools
-    resources:
       - tenants
     verbs:
       - create
@@ -123,12 +60,16 @@ rules:
   - apiGroups:
       - syn.tools
     resources:
+      - clusters/finalizers
+      - gitrepos/finalizers
       - tenants/finalizers
     verbs:
       - update
   - apiGroups:
       - syn.tools
     resources:
+      - clusters/status
+      - gitrepos/status
       - tenants/status
     verbs:
       - get
