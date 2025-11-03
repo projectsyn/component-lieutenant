@@ -2,7 +2,7 @@ module test
 
 go 1.24.0
 
-toolchain go1.24.7
+toolchain go1.24.9
 
 require (
 	github.com/instrumenta/kubeval v0.16.1
