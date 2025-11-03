@@ -2,8 +2,6 @@ module test
 
 go 1.24.0
 
-toolchain go1.24.7
-
 require (
 	github.com/instrumenta/kubeval v0.16.1
 	github.com/stretchr/testify v1.11.1
