@@ -3,7 +3,19 @@ local inv = kap.inventory();
 local params = inv.parameters.lieutenant;
 local argocd = import 'lib/argocd.libjsonnet';
 
-local app = argocd.App('lieutenant', params.namespace);
+local app = argocd.App('lieutenant', params.namespace) {
+  spec+: {
+    ignoreDifferences+: [
+      {
+        group: 'apiextensions.k8s.io',
+        kind: 'CustomResourceDefinition',
+        jsonPointers: [
+          '/spec/preserveUnknownFields',
+        ],
+      },
+    ],
+  },
+};
 
 local appPath =
   local project = std.get(std.get(app, 'spec', {}), 'project', 'syn');
