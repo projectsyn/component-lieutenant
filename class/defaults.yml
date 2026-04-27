@@ -51,6 +51,10 @@ parameters:
         - kind: ServiceAccount
           name: lieutenant-api-user
       env: {}
+      vault:
+        enabled: ${lieutenant:operator:vault:enabled}
+        addr: ${lieutenant:operator:vault:addr}
+        login_method: oidc
 
     tenant_rbac: {}
 
