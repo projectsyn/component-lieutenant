@@ -118,6 +118,11 @@ local user_sa_secrets =
   else
     [];
 
+local vault_env = if params.api.vault.enabled then {
+  VAULT_ADDR: params.api.vault.addr,
+  VAULT_LOGIN_METHOD: params.api.vault.login_method,
+} else {};
+
 
 local objects = [
   role,
@@ -150,7 +155,7 @@ local objects = [
                     STEWARD_IMAGE: steward_image,
                     LIEUTENANT_INSTANCE: params.api.lieutenant_instance,
                     DEFAULT_API_SECRET_REF_NAME: params.api.default_githost,
-                  } + params.api.env)
+                  } + vault_env + params.api.env)
                 ),
               }
             else
