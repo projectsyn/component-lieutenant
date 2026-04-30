@@ -167,6 +167,32 @@ env:
 Additional environment that should be passed to the Lieutenant API.
 If a dict is given `valueFrom:` is assumed.
 
+== `api.vault.enabled`
+
+[horizontal]
+type:: bool
+default:: `${lieutenant:operator:vault:enabled}`
+
+Whether to enable the Lieutenant API Vault integration.
+If set to true, `api.vault.addr` and `api.vault.login_method` are included in the API discovery endpoint (`/`) as fields `vault.addr` and `vault.loginMethod`.
+Field `vault.loginMethod` is omitted from the response if component parameter `api.vault.login_method` is set to the empty string.
+
+== `api.vault.addr`
+
+[horizontal]
+type:: string
+default:: `${lieutenant:operator:vault:addr}`
+
+Address of the Vault instance.
+
+== `api.vault.login_method`
+
+[horizontal]
+type:: string
+default:: `oidc`
+
+Default login method for users for the Vault instance at `api.vault.addr`.
+Should be set to a value that's suitable for the Vault CLI `login` flag `-method`.
 
 == `api.ingress.host`
 

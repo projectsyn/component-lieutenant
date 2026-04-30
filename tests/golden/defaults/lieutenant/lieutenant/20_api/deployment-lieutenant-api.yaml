@@ -36,7 +36,11 @@ spec:
               value: https://idp.test.com/
             - name: STEWARD_IMAGE
               value: docker.io/projectsyn/steward:v0.13.0
-          image: docker.io/projectsyn/lieutenant-api:v0.12.2
+            - name: VAULT_ADDR
+              value: vault.todo
+            - name: VAULT_LOGIN_METHOD
+              value: oidc
+          image: docker.io/projectsyn/lieutenant-api:v0.13.0
           imagePullPolicy: Always
           livenessProbe:
             httpGet:
