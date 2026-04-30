@@ -16,7 +16,8 @@ local params = inv.parameters.lieutenant;
         endpoint: gh.endpoint,
         token: gh.token,
         hostKeys: gh.host_keys,
-      } + if std.objectHas(gh, 'ssh_endpoint') then { sshEndpoint: gh.ssh_endpoint } else {},
+        [if std.objectHas(gh, 'ssh_endpoint') then 'sshEndpoint']: std.get(gh, ssh_endpoint),
+      },
   }
   for name in std.objectFields(params.githosts)
 }
