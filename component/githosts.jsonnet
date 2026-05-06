@@ -10,11 +10,14 @@ local params = inv.parameters.lieutenant;
     metadata+: {
       namespace: params.namespace,
     },
-    stringData: {
-      endpoint: params.githosts[name].endpoint,
-      token: params.githosts[name].token,
-      hostKeys: params.githosts[name].host_keys,
-    },
+    stringData:
+      local gh = params.githosts[name];
+      {
+        endpoint: gh.endpoint,
+        token: gh.token,
+        hostKeys: gh.host_keys,
+        [if std.objectHas(gh, 'ssh_endpoint') then 'sshEndpoint']: gh.ssh_endpoint,
+      },
   }
   for name in std.objectFields(params.githosts)
 }

@@ -320,10 +320,14 @@ A list of GitLab instances Lieutenant will be able to connect to for repository 
 A GitLab token with `api` scope need to be accessible through Vault.
 See the xref:how-tos/setup-githost.adoc[setup githost] how-to for further details.
 
+`ssh_endpoint` is optional. If omitted, the operator uses the same host as `endpoint` for SSH.
+Provide a full SSH URL (for example `ssh://gitlab-ssh.example.com`) or just a host name.
+
 ----
 githosts:
   gitlab-vshn:
     endpoint: https://git.vshn.net/
+    ssh_endpoint: ssh://gitlab-ssh.vshn.net
     token: '?{vaultkv:${cluster:tenant}/${cluster:name}/lieutenant/githosts/gitlab-vshn/token}'
     host_keys: |
       git.vshn.net ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCnE1dMkh+3uHWck+cTvQqeNUW0lj1uVcIC9JX2Tg6gmkKCYA73+o+I7vo4g6nPtSOAfITvYdHJLzwE9GwlSFsXHMR9q0ErWl2wC+w6FawLMz9//5XqiBi2qq/8WnWp3ecY16jDoGRW4eymT+USFHKJVi696XBy3WE/0BBapPZ58WPqkKN6A27qkIK6FehI80f+zN4ZqikdwWuCFs35fsimcmLnWqWPm8zbOkgCiB+ov4O/xmRNHwJWCk/qzU6X/M9YtMXzAa5mjwDvcHSAizFD3a3Fv68G1VsmRZ0THLrRKM/WOxrWNZoimSNgyjTzoCwiKeckvL5+hpNcNSW+eBPt
