@@ -35,7 +35,7 @@ spec:
             - name: OIDC_DISCOVERY_URL
               value: https://idp.test.com/
             - name: STEWARD_IMAGE
-              value: docker.io/projectsyn/steward:v0.13.0
+              value: docker.io/projectsyn/steward:v0.14.0
             - name: VAULT_ADDR
               value: vault.todo
             - name: VAULT_LOGIN_METHOD
