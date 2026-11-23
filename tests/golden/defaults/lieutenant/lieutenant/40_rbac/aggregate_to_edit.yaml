@@ -1,0 +1,20 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations: {}
+  labels:
+    name: lieutenant-edit
+    rbac.authorization.k8s.io/aggregate-to-admin: 'true'
+    rbac.authorization.k8s.io/aggregate-to-edit: 'true'
+  name: lieutenant:edit
+rules:
+  - apiGroups:
+      - syn.tools
+    resources:
+      - '*'
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - patch
+      - update
