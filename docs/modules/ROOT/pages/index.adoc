@@ -2,5 +2,8 @@
 
 Lieutenant is a Commodore component to manage lieutenant.
 
+The component deploys cluster roles which aggregate permissions to manage `syn.tools` custom resources to the default `view`, `edit` and `admin` cluster roles.
+The `view` cluster role gets read-only permissions for all `syn.tools` custom resources and the `edit` and `admin` cluster roles get full read-write permissions for all `syn.tools` custom resources.
+
 See the xref:references/parameters.adoc[parameters] reference for further details.
 

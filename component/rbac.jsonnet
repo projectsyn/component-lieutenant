@@ -18,4 +18,36 @@ local params = inv.parameters.lieutenant;
 
   }
   for ten in std.objectFields(params.tenant_rbac)
+} + {
+  aggregate_to_view: kube.ClusterRole('lieutenant:view') {
+    metadata+: {
+      labels+: {
+        'rbac.authorization.k8s.io/aggregate-to-view': 'true',
+        'rbac.authorization.k8s.io/aggregate-to-edit': 'true',
+        'rbac.authorization.k8s.io/aggregate-to-admin': 'true',
+      },
+    },
+    rules: [
+      {
+        apiGroups: [ 'syn.tools' ],
+        resources: [ '*' ],
+        verbs: [ 'get', 'list', 'watch' ],
+      },
+    ],
+  },
+  aggregate_to_edit: kube.ClusterRole('lieutenant:edit') {
+    metadata+: {
+      labels+: {
+        'rbac.authorization.k8s.io/aggregate-to-edit': 'true',
+        'rbac.authorization.k8s.io/aggregate-to-admin': 'true',
+      },
+    },
+    rules: [
+      {
+        apiGroups: [ 'syn.tools' ],
+        resources: [ '*' ],
+        verbs: [ 'create', 'delete', 'deletecollection', 'patch', 'update' ],
+      },
+    ],
+  },
 }
